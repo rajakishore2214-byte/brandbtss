@@ -1,0 +1,90 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Category {
+  id             String    @id @default(uuid())
+  slug           String    @unique
+  name           String
+  description    String
+  image          String
+  seoTitle       String
+  seoDescription String
+  parentSlug     String?   // For subcategory support
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Product {
+  id             String    @id
+  name           String
+  brand          String
+  categorySlug   String
+  price          Int
+  originalPrice  Int?
+  rating         Float
+  image          String
+  description    String
+  features       String    // JSON string representing string[]
+  pros           String    // JSON string representing string[]
+  cons           String    // JSON string representing string[]
+  specs          String    // JSON string representing Record<string, string>
+  dealTag        String?
+  score          Int       @default(80) // Recommendation score (1-100)
+  affiliateUrls  String    // JSON string representing { network: string, url: string, price: number }[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Comparison {
+  id               String    @id @default(uuid())
+  slug             String    @unique
+  title            String
+  productAId       String
+  productBId       String
+  introduction     String
+  featureBreakdown String    // JSON string representing comparison items
+  verdict          String
+  seoTitle         String
+  seoDescription   String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model Article {
+  id                  String    @id @default(uuid())
+  slug                String    @unique
+  type                String    // "best" | "review" | "blog"
+  title               String
+  description         String
+  categorySlug        String
+  date                String
+  author              String
+  image               String
+  introduction        String
+  quickRecommendation String?   // JSON string of { overallPickId: string, budgetPickId: string, premiumPickId: string, summary: string }
+  topPicks            String?   // JSON string of array { productId: string, tag: string, awardReason: string }
+  productIds          String?   // JSON string of array of string
+  buyingGuide         String?   // JSON string of array { title: string, content: string }
+  faqs                String?   // JSON string of array { question: string, answer: string }
+  verdict             String?   // For single product reviews
+  rating              Float?    // For single product reviews
+  seoTitle            String
+  seoDescription      String
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}
+
+model Click {
+  id               Int       @id @default(autoincrement())
+  productId        String
+  affiliateNetwork String
+  clickedAt        DateTime  @default(now())
+  ip               String?
+  userAgent        String?
+}
