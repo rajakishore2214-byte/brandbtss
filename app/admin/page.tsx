@@ -52,9 +52,15 @@ export default async function AdminDashboard() {
             </Link>
             <Link
               href="/admin/products"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 px-4 py-2 text-xs font-bold text-slate-200 transition-colors"
+            >
+              <PlusCircle className="h-4 w-4 text-amber-500" /> Manage Catalog
+            </Link>
+            <Link
+              href="/admin/articles"
               className="inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-text hover:bg-primary-hover transition-colors"
             >
-              <PlusCircle className="h-4 w-4" /> Manage Catalog
+              <PlusCircle className="h-4 w-4" /> Manage Articles
             </Link>
           </div>
         </div>
@@ -202,20 +208,20 @@ export default async function AdminDashboard() {
               </div>
               <CheckCircle2 className="h-5 w-5 text-emerald-500" />
             </div>
-            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-850 flex items-center justify-between">
+            <Link href="/admin/products" className="p-4 rounded-2xl bg-slate-955 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-900/40 flex items-center justify-between transition-all">
               <div>
                 <span className="text-slate-400 font-medium">Products Table</span>
                 <span className="block text-lg font-bold text-white mt-1">{productCount} Items</span>
               </div>
               <CheckCircle2 className="h-5 w-5 text-emerald-500" />
-            </div>
-            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-850 flex items-center justify-between">
+            </Link>
+            <Link href="/admin/articles" className="p-4 rounded-2xl bg-slate-955 border border-slate-800 hover:border-primary/50 hover:bg-slate-900/40 flex items-center justify-between transition-all">
               <div>
                 <span className="text-slate-400 font-medium">Articles Table</span>
                 <span className="block text-lg font-bold text-white mt-1">{articleCount} Items</span>
               </div>
               <CheckCircle2 className="h-5 w-5 text-emerald-500" />
-            </div>
+            </Link>
           </div>
         </section>
 

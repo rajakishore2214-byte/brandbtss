@@ -1,90 +1,63 @@
 import type { MetadataRoute } from "next";
-import { db } from "@/lib/db";
+import { client } from "@/lib/sanity.client";
+import seedData from "../data/seed-data.json";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://brandbtss.com";
 
-  // 1. Static Pages
+  // Static Paths
   const staticPaths = [
-    "",
-    "/deals",
-    "/about",
-    "/contact",
-    "/privacy-policy",
-    "/terms",
-    "/affiliate-disclosure",
-    "/admin", // Admin dashboard (will be blocked in robots.txt anyway)
-  ].map((path) => ({
-    url: `${baseUrl}${path}`,
-    lastModified: new Date(),
-    changeFrequency: (path === "" ? "daily" : "weekly") as "daily" | "weekly",
-    priority: path === "" ? 1.0 : 0.7,
-  }));
+    {
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/categories`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+  ];
 
   try {
-    // 2. Dynamic Categories
-    const categories = await db.category.findMany();
-    const categoryPaths = categories.map((cat) => ({
-      url: `${baseUrl}/category/${cat.slug}`,
-      lastModified: new Date(),
+    const projectId = client.config().projectId;
+    if (!projectId || projectId === "placeholder-id") {
+      throw new Error("Sanity Project ID is not configured.");
+    }
+    
+    // Fetch all posts from Sanity to list in the sitemap
+    const posts: Array<{ postType: string; slug: string; updatedAt?: string; publishedAt: string }> =
+      await client.fetch(`
+        *[_type == "post"] {
+          postType,
+          "slug": slug.current,
+          publishedAt,
+          updatedAt
+        }
+      `);
+
+    const dynamicPaths = posts.map((post) => ({
+      url: `${baseUrl}/${post.postType}/${post.slug}`,
+      lastModified: post.updatedAt ? new Date(post.updatedAt) : new Date(post.publishedAt),
       changeFrequency: "weekly" as const,
-      priority: 0.8,
+      priority: post.postType === "roundup" ? 0.9 : 0.8,
     }));
 
-    // 3. Dynamic Products Specs Pages
-    const products = await db.product.findMany();
-    const productPaths = products.map((prod) => ({
-      url: `${baseUrl}/product/${prod.id}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.85,
-    }));
-
-    // 4. Dynamic Listicles & Buying Guides
-    const articles = await db.article.findMany();
-    const bestProductPaths = articles
-      .filter((a) => a.type === "best")
-      .map((art) => ({
-        url: `${baseUrl}/best-products/${art.slug}`,
-        lastModified: new Date(),
+    return [...staticPaths, ...dynamicPaths];
+  } catch (error) {
+    console.warn("Failed to generate dynamic sitemap from Sanity. Falling back to seed data:", (error as Error).message);
+    
+    const dynamicPaths = seedData
+      .filter((d: any) => d._type === "post")
+      .map((post: any) => ({
+        url: `${baseUrl}/${post.postType}/${post.slug.current}`,
+        lastModified: post.updatedAt ? new Date(post.updatedAt) : new Date(post.publishedAt),
         changeFrequency: "weekly" as const,
-        priority: 0.9,
+        priority: post.postType === "roundup" ? 0.9 : 0.8,
       }));
 
-    // 5. Dynamic Single Reviews
-    const reviewPaths = articles
-      .filter((a) => a.type === "review")
-      .map((art) => {
-        let pIds: string[] = [];
-        try { pIds = JSON.parse(art.productIds || "[]"); } catch (e) { pIds = []; }
-        return {
-          url: `${baseUrl}/reviews/${pIds[0] || "product"}-review`,
-          lastModified: new Date(),
-          changeFrequency: "weekly" as const,
-          priority: 0.8,
-        };
-      });
-
-    // 6. Dynamic Comparisons
-    const comparisons = await db.comparison.findMany();
-    const comparisonPaths = comparisons.map((comp) => ({
-      url: `${baseUrl}/comparisons/${comp.slug}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.8,
-    }));
-
-    return [
-      ...staticPaths,
-      ...categoryPaths,
-      ...productPaths,
-      ...bestProductPaths,
-      ...reviewPaths,
-      ...comparisonPaths,
-    ];
-  } catch (error) {
-    console.error("Failed to generate dynamic sitemap:", error);
-    // Fallback to static paths only
-    return staticPaths;
+    return [...staticPaths, ...dynamicPaths];
   }
 }

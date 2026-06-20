@@ -80,6 +80,7 @@ export function mapDbComparison(comp: DbComparison) {
 
 export function mapDbArticle(art: DbArticle) {
   return {
+    id: art.id,
     slug: art.slug,
     type: art.type as "best" | "review" | "blog",
     title: art.title,
@@ -112,7 +113,8 @@ export function mapDbArticle(art: DbArticle) {
     verdict: art.verdict ?? undefined,
     rating: art.rating ?? undefined,
     seoTitle: art.seoTitle,
-    seoDescription: art.seoDescription
+    seoDescription: art.seoDescription,
+    status: art.status
   };
 }
 

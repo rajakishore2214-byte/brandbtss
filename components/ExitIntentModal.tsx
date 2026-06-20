@@ -58,32 +58,32 @@ export default function ExitIntentModal() {
               Wait! Don't Miss Out
             </h3>
             <p className="text-sm text-slate-300">
-              We just updated our database with active software discounts and coupon codes! Save up to <span className="font-bold text-amber-400">55% off</span> on hosting, tracking plugins, and SEO tool subscriptions.
+              We just updated our reviews of the best project management and invoice tracking software. Save up to <span className="font-bold text-amber-400">55% off</span> on premium subscriptions.
             </p>
           </div>
 
           {/* Quick teaser box */}
           <div className="rounded-xl bg-slate-950/50 p-4 border border-slate-800/80 text-left space-y-2.5">
             <div className="flex justify-between items-center text-xs">
-              <span className="font-bold text-slate-400">TODAY'S HOT DEALS</span>
+              <span className="font-bold text-slate-400">FEATURED GUIDES</span>
               <span className="rounded bg-rose-500/10 text-rose-400 px-1.5 py-0.5 font-bold uppercase tracking-wider text-[9px]">
-                Live Now
+                New Update
               </span>
             </div>
             <div className="space-y-1">
-              <p className="text-sm font-semibold text-white">🔥 Hostinger Managed WordPress - 55% OFF</p>
-              <p className="text-sm font-semibold text-white">🔥 GetResponse Email - 20% OFF</p>
+              <p className="text-sm font-semibold text-white">🔥 Best Project Management Suites Compared</p>
+              <p className="text-sm font-semibold text-white">🔥 Bonsai Invoicing & Contracts Review</p>
             </div>
           </div>
 
           <div className="flex flex-col gap-2 pt-2">
             <Link
-              href="/deals"
+              href="/roundup/best-pm-tools"
               onClick={() => setShowModal(false)}
               className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-primary py-3 text-center text-sm font-bold text-primary-text hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/20 transition-all"
             >
               <TrendingUp className="h-4 w-4" />
-              View Today's Hot Deals
+              View PM Tools Comparison
               <ArrowRight className="h-4 w-4" />
             </Link>
             
