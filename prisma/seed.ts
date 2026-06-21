@@ -207,7 +207,7 @@ async function main() {
       price: 269,
       originalPrice: 599,
       rating: 4.7,
-      image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=600",
+      image: "/images/web_hosting.png",
       description: "Highly optimized Managed WordPress hosting offering top-tier loading speeds, LiteSpeed cache engine, free domain name, and robust NVMe storage.",
       features: JSON.stringify([
         "LiteSpeed Cache & object cache for sub-second page loads",
@@ -245,7 +245,7 @@ async function main() {
       price: 399,
       originalPrice: 899,
       rating: 4.4,
-      image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&q=80&w=600",
+      image: "/images/web_hosting.png",
       description: "The industry standard shared hosting plan officially recommended by WordPress.org, featuring built-in CDN, staging, and domain privacy.",
       features: JSON.stringify([
         "Free Cloudflare CDN integration for global content delivery",
@@ -283,7 +283,7 @@ async function main() {
       price: 2450,
       originalPrice: 3000,
       rating: 4.8,
-      image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=600",
+      image: "/images/web_hosting.png",
       description: "Premium managed hosting designed specifically for heavy-traffic affiliate sites, utilizing Google Cloud infrastructure and advanced security layers.",
       features: JSON.stringify([
         "Google Cloud Platform nodes with custom server architecture",
@@ -323,7 +323,7 @@ async function main() {
       price: 7299,
       originalPrice: 9995,
       rating: 4.6,
-      image: "https://images.unsplash.com/photo-1621972750749-0fbb1abb7736?auto=format&fit=crop&q=80&w=600",
+      image: "/images/philips_airfryer.png",
       description: "Bring home the World's No. 1 Airfryer for a 100% taste profile satisfaction with up to 90% less oil. Powered by Rapid Air technology with a unique starfish design for crispier outcomes.",
       features: JSON.stringify([
         "Rapid Air Technology swirls hot air for crispy food",
@@ -362,7 +362,7 @@ async function main() {
       price: 4999,
       originalPrice: 8999,
       rating: 4.3,
-      image: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&q=80&w=600",
+      image: "/images/philips_airfryer.png",
       description: "Large capacity digital air fryer featuring 6 presets and an elegant blue touch interface. Offers excellent cooking capacity for Indian families at a budget friendly price point.",
       features: JSON.stringify([
         "Large 5.5-liter pan holds whole chicken or large fries batch",
@@ -403,7 +403,7 @@ async function main() {
       price: 1799,
       originalPrice: 3999,
       rating: 4.1,
-      image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&q=80&w=600",
+      image: "/images/samsung_watch.png",
       description: "An incredibly feature-rich entry-level smartwatch containing a large 1.69 inch LCD display, 60 sports tracking modes, instant reply, and health tracking sensors.",
       features: JSON.stringify([
         "1.69-inch vibrant LCD touchscreen display",
@@ -442,7 +442,7 @@ async function main() {
       price: 24999,
       originalPrice: 36999,
       rating: 4.7,
-      image: "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&q=80&w=600",
+      image: "/images/samsung_watch.png",
       description: "The ultimate Android smartwatch experience. Features a premium Super AMOLED display, sapphire crystal screen cover, ECG monitor, blood pressure sensor, and LTE cellular functionality.",
       features: JSON.stringify([
         "Super AMOLED Display with sapphire glass cover",
@@ -483,7 +483,7 @@ async function main() {
       price: 3999,
       originalPrice: 4999,
       rating: 4.5,
-      image: "https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&q=80&w=600",
+      image: "/images/jbl_speaker.png",
       description: "JBL Pro Sound delivers surprisingly big audio and punchy bass from Go 4's ultra-compact size. Completely redesigned with a stylish carrying strap, IP67 rating, and Auracast support.",
       features: JSON.stringify([
         "Ultra-portable JBL Pro Sound signature",
@@ -522,7 +522,7 @@ async function main() {
       price: 4490,
       originalPrice: 5990,
       rating: 4.4,
-      image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&q=80&w=600",
+      image: "/images/jbl_speaker.png",
       description: "Take powerful, clear sound wherever you go with the Sony SRS-XB100. Featuring a passive radiator, Sound Diffusion Processor, and a multiway strap.",
       features: JSON.stringify([
         "Sound Diffusion Processor spreads audio widely",

@@ -27,7 +27,7 @@ export const products: Product[] = [
     price: 269, // monthly price in INR
     originalPrice: 599,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=600",
+    image: "/images/web_hosting.png",
     affiliateUrl: "https://hostinger.in/brandbtss",
     description: "Highly optimized Managed WordPress hosting offering top-tier loading speeds, LiteSpeed cache engine, free domain name, and robust NVMe storage.",
     features: [
@@ -62,7 +62,7 @@ export const products: Product[] = [
     price: 399,
     originalPrice: 899,
     rating: 4.4,
-    image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&q=80&w=600",
+    image: "/images/web_hosting.png",
     affiliateUrl: "https://bluehost.com/brandbtss",
     description: "The industry standard shared hosting plan officially recommended by WordPress.org, featuring built-in CDN, staging, and domain privacy.",
     features: [
@@ -97,7 +97,7 @@ export const products: Product[] = [
     price: 2450,
     originalPrice: 3000,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=600",
+    image: "/images/web_hosting.png",
     affiliateUrl: "https://wpengine.com/brandbtss",
     description: "Premium managed hosting designed specifically for heavy-traffic affiliate sites, utilizing Google Cloud infrastructure and advanced security layers.",
     features: [
