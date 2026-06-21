@@ -109,6 +109,62 @@ export interface SanityPost {
 }
 
 // Fallback resolver for local seed data
+// Fallback image helper based on post slug
+function getFallbackPostMainImage(slug: string): string {
+  if (slug === "best-home-kitchen-amazon") {
+    return "/images/home_kitchen_roundup.png";
+  }
+  if (slug === "best-electronics-gadgets-amazon") {
+    return "/images/electronics_roundup.png";
+  }
+  if (slug === "best-clothing-accessories-amazon") {
+    return "/images/clothing_roundup.png";
+  }
+  if (slug === "best-smart-home-appliances") {
+    return "/images/smart_home_roundup.png";
+  }
+  return "/images/web_hosting.png";
+}
+
+// Fallback image helper for product cards based on name & slug
+function getFallbackProductImage(name: string, affiliateSlug: string): string {
+  const n = name.toLowerCase();
+  const s = (affiliateSlug || "").toLowerCase();
+  
+  if (n.includes("organizer") || s.includes("organizer")) {
+    return "/images/kitchen_organizer.png";
+  }
+  if (n.includes("cookware") || n.includes("pan") || n.includes("pot") || s.includes("cookware")) {
+    return "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&q=80&w=600";
+  }
+  if (n.includes("airfryer") || n.includes("air fryer") || s.includes("airfryer")) {
+    return "/images/philips_airfryer.png";
+  }
+  if (n.includes("storage") || n.includes("container") || s.includes("storage")) {
+    return "https://images.unsplash.com/photo-1595348020910-87cfdae90e3f?auto=format&fit=crop&q=80&w=600";
+  }
+  if (n.includes("watch") || n.includes("tracker") || n.includes("band") || s.includes("watch") || s.includes("tracker")) {
+    return "/images/samsung_watch.png";
+  }
+  if (n.includes("speaker") || s.includes("speaker")) {
+    return "/images/jbl_speaker.png";
+  }
+  if (n.includes("earbud") || n.includes("headphone") || n.includes("tws") || s.includes("earbud") || s.includes("headphone")) {
+    return "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&q=80&w=600";
+  }
+  if (n.includes("charge") || n.includes("power bank") || s.includes("charge") || s.includes("power")) {
+    return "https://images.unsplash.com/photo-1609592424089-9a7cd118ba82?auto=format&fit=crop&q=80&w=600";
+  }
+  if (n.includes("tee") || n.includes("shirt") || n.includes("clothing") || n.includes("jacket") || n.includes("jogger") || n.includes("belt") || n.includes("wallet") || n.includes("bag") || n.includes("boot") || n.includes("sunglasses") || s.includes("clothing") || s.includes("wear")) {
+    return "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=600";
+  }
+  if (s.includes("bonsai")) {
+    return "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600";
+  }
+  return "/images/web_hosting.png";
+}
+
+// Fallback resolver for local seed data
 function getFallbackPost(slug: string): SanityPost | null {
   const rawPost = seedData.find(
     (d: any) => d._type === "post" && d.slug?.current === slug
@@ -121,12 +177,13 @@ function getFallbackPost(slug: string): SanityPost | null {
   if (rawPost.author && rawPost.author._ref) {
     const rawAuthor = seedData.find(
       (d: any) => d._type === "author" && d._id === rawPost.author._ref
-    );
+    ) as any;
     if (rawAuthor) {
       resolvedAuthor = {
         name: rawAuthor.name || "Anonymous",
         bio: rawAuthor.bio,
         credentials: rawAuthor.credentials,
+        photo: rawAuthor.photo || "/images/author-jane.png",
       };
     }
   }
@@ -143,7 +200,7 @@ function getFallbackPost(slug: string): SanityPost | null {
           ? {
               _id: rawTool._id,
               name: rawTool.name || "Unnamed Tool",
-              logo: rawTool.logo,
+              logo: rawTool.logo || getFallbackProductImage(rawTool.name || "", rawTool.affiliateSlug || ""),
               tagline: rawTool.tagline,
               rating: rawTool.rating,
               pros: rawTool.pros,
@@ -157,13 +214,26 @@ function getFallbackPost(slug: string): SanityPost | null {
       .filter(Boolean) as SanityProductCard[];
   }
 
+  // Inject fallback images into block content productCard types
+  const resolvedBody = rawPost.body
+    ? rawPost.body.map((block: any) => {
+        if (block._type === "productCard") {
+          return {
+            ...block,
+            logo: block.logo || getFallbackProductImage(block.name || "", block.affiliateSlug || ""),
+          };
+        }
+        return block;
+      })
+    : [];
+
   return {
     title: rawPost.title,
     slug: rawPost.slug.current,
     postType: rawPost.postType,
     excerpt: rawPost.excerpt,
-    mainImage: rawPost.mainImage,
-    body: rawPost.body,
+    mainImage: rawPost.mainImage || getFallbackPostMainImage(slug),
+    body: resolvedBody,
     author: resolvedAuthor,
     publishedAt: rawPost.publishedAt,
     updatedAt: rawPost.updatedAt,
