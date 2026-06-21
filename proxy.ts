@@ -20,7 +20,16 @@ export function proxy(req: NextRequest) {
         const adminPassword = process.env.ADMIN_PASSWORD || "password123";
 
         if (user === adminUser && pwd === adminPassword) {
-          return NextResponse.next();
+          const res = NextResponse.next();
+          // Set a secure HTTP-only cookie containing the auth token for Server Actions
+          res.cookies.set("admin_token", authValue, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 60 * 60 * 24, // 24 hours
+            path: "/",
+          });
+          return res;
         }
       } catch (e) {
         console.error("Failed to parse basic authorization header", e);

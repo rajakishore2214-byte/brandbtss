@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-import { client } from "@/lib/sanity.client";
-import seedData from "../data/seed-data.json";
+import { db } from "@/lib/db";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://brandbtss.com";
@@ -19,45 +18,88 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly" as const,
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/deals`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.9,
+    },
   ];
 
   try {
-    const projectId = client.config().projectId;
-    if (!projectId || projectId === "placeholder-id") {
-      throw new Error("Sanity Project ID is not configured.");
-    }
-    
-    // Fetch all posts from Sanity to list in the sitemap
-    const posts: Array<{ postType: string; slug: string; updatedAt?: string; publishedAt: string }> =
-      await client.fetch(`
-        *[_type == "post"] {
-          postType,
-          "slug": slug.current,
-          publishedAt,
-          updatedAt
-        }
-      `);
-
-    const dynamicPaths = posts.map((post) => ({
-      url: `${baseUrl}/${post.postType}/${post.slug}`,
-      lastModified: post.updatedAt ? new Date(post.updatedAt) : new Date(post.publishedAt),
+    // 1. Fetch categories
+    const categories = await db.category.findMany({
+      select: { slug: true, updatedAt: true }
+    });
+    const categoryPaths = categories.map((c) => ({
+      url: `${baseUrl}/category/${c.slug}`,
+      lastModified: new Date(c.updatedAt),
       changeFrequency: "weekly" as const,
-      priority: post.postType === "roundup" ? 0.9 : 0.8,
+      priority: 0.8,
     }));
 
-    return [...staticPaths, ...dynamicPaths];
-  } catch (error) {
-    console.warn("Failed to generate dynamic sitemap from Sanity. Falling back to seed data:", (error as Error).message);
-    
-    const dynamicPaths = seedData
-      .filter((d: any) => d._type === "post")
-      .map((post: any) => ({
-        url: `${baseUrl}/${post.postType}/${post.slug.current}`,
-        lastModified: post.updatedAt ? new Date(post.updatedAt) : new Date(post.publishedAt),
-        changeFrequency: "weekly" as const,
-        priority: post.postType === "roundup" ? 0.9 : 0.8,
-      }));
+    // 2. Fetch products
+    const products = await db.product.findMany({
+      where: { status: "active" },
+      select: { id: true, updatedAt: true }
+    });
+    const productPaths = products.map((p) => ({
+      url: `${baseUrl}/product/${p.id}`,
+      lastModified: new Date(p.updatedAt),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
 
-    return [...staticPaths, ...dynamicPaths];
+    // 3. Fetch articles (filtered to published)
+    const articles = await db.article.findMany({
+      where: { status: "published" },
+      select: { slug: true, type: true, productIds: true, updatedAt: true }
+    });
+    const articlePaths = articles.map((a) => {
+      let path = `/${a.type}/${a.slug}`;
+      if (a.type === "best") {
+        path = `/best-products/${a.slug}`;
+      } else if (a.type === "review") {
+        let productId = a.slug;
+        if (a.productIds) {
+          try {
+            const ids = JSON.parse(a.productIds);
+            if (Array.isArray(ids) && ids.length > 0) {
+              productId = ids[0];
+            }
+          } catch {}
+        }
+        path = `/reviews/${productId}-review`;
+      } else if (a.type === "blog") {
+        path = `/blog/${a.slug}`;
+      } else if (a.type === "comparison") {
+        path = `/comparisons/${a.slug}`;
+      } else if (a.type === "deal") {
+        path = `/deals/${a.slug}`;
+      }
+
+      return {
+        url: `${baseUrl}${path}`,
+        lastModified: new Date(a.updatedAt),
+        changeFrequency: "weekly" as const,
+        priority: a.type === "best" ? 0.9 : 0.8,
+      };
+    });
+
+    // 4. Fetch Comparisons
+    const comparisons = await db.comparison.findMany({
+      select: { slug: true, updatedAt: true }
+    });
+    const comparisonPaths = comparisons.map((comp) => ({
+      url: `${baseUrl}/comparisons/${comp.slug}`,
+      lastModified: new Date(comp.updatedAt),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    }));
+
+    return [...staticPaths, ...categoryPaths, ...productPaths, ...articlePaths, ...comparisonPaths];
+  } catch (error) {
+    console.error("Failed to generate dynamic sitemap:", error);
+    return staticPaths;
   }
 }

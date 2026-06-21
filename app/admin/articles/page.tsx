@@ -13,7 +13,7 @@ export default async function AdminArticlesDashboard() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 py-10">
+    <div className="min-h-screen bg-slate-955 text-slate-100 py-6 sm:py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
         
         {/* Navigation and Add Button */}
@@ -37,7 +37,7 @@ export default async function AdminArticlesDashboard() {
           <p className="text-xs text-slate-400 mt-1">Publish and edit buying guides, product reviews, and blog updates</p>
         </div>
 
-        {/* Articles Table */}
+        {/* Articles list container */}
         {articlesList.length === 0 ? (
           <div className="rounded-2xl border border-slate-800 bg-slate-900/10 p-12 text-center text-slate-400">
             <BookOpen className="h-12 w-12 mx-auto text-slate-600 mb-4" />
@@ -45,8 +45,10 @@ export default async function AdminArticlesDashboard() {
             <p className="text-xs text-slate-500 mt-1">Get started by creating your first review or buying guide.</p>
           </div>
         ) : (
-          <div className="overflow-hidden border border-slate-800 rounded-2xl bg-slate-900/10 shadow-xl">
-            <div className="overflow-x-auto">
+          <div className="space-y-4">
+            
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-hidden border border-slate-800 rounded-2xl bg-slate-900/10 shadow-xl">
               <table className="w-full text-left border-collapse text-xs min-w-[800px]">
                 <thead>
                   <tr className="border-b border-slate-850 bg-slate-900/80 text-slate-300 font-bold uppercase tracking-wider">
@@ -107,7 +109,6 @@ export default async function AdminArticlesDashboard() {
                           >
                             <Edit className="h-4 w-4" />
                           </Link>
-                          
                           <DeleteArticleButton id={article.id} />
                         </div>
                       </td>
@@ -116,6 +117,59 @@ export default async function AdminArticlesDashboard() {
                 </tbody>
               </table>
             </div>
+
+            {/* Mobile Cards View */}
+            <div className="grid gap-4 md:hidden">
+              {articlesList.map((article) => (
+                <div key={article.id} className="rounded-2xl border border-slate-800 bg-slate-900/40 p-4 space-y-3">
+                  <div className="space-y-1">
+                    <span className={`rounded-full px-2 py-0.5 text-[8px] font-black uppercase inline-block ${
+                      article.type === "best" ? "bg-indigo-950 text-indigo-400 border border-indigo-900/40" :
+                      article.type === "review" ? "bg-amber-950 text-amber-400 border border-amber-900/40" :
+                      article.type === "comparison" ? "bg-blue-950 text-blue-400 border border-blue-900/40" :
+                      "bg-slate-800 text-slate-300"
+                    }`}>
+                      {article.type}
+                    </span>
+                    <span className="text-[10px] text-slate-500 font-mono select-all block mt-1">/{article.slug}</span>
+                    <span className="font-extrabold text-white text-sm block leading-tight">{article.title}</span>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-[11px] text-slate-400 pt-1">
+                    <span className="flex items-center gap-1 font-medium capitalize">
+                      <Tag className="h-3 w-3 text-slate-500" /> {article.categorySlug}
+                    </span>
+                    <span className="flex items-center gap-1 font-medium">
+                      <User className="h-3 w-3 text-slate-500" /> {article.author}
+                    </span>
+                    <span className="flex items-center gap-1 font-medium">
+                      <Calendar className="h-3 w-3 text-slate-500" /> {article.date}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between items-center text-[11px] pt-3 border-t border-slate-800/60">
+                    <div>
+                      <span className={`inline-flex items-center gap-1 font-bold ${
+                        article.status === "published" ? "text-emerald-400" : "text-amber-500"
+                      }`}>
+                        Status: {article.status}
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      <Link
+                        href={`/admin/articles/${article.id}/edit`}
+                        className="inline-flex h-8 px-3 items-center justify-center rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-semibold"
+                        title="Edit Article"
+                      >
+                        Edit
+                      </Link>
+                      <DeleteArticleButton id={article.id} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
           </div>
         )}
 

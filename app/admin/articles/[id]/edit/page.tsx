@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Save, Edit } from "lucide-react";
 import { updateArticle } from "@/app/admin/actions";
 import { db } from "@/lib/db";
+import ImageUploadInput from "@/components/ImageUploadInput";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -26,6 +27,22 @@ export default async function EditArticlePage({ params }: PageProps) {
   // Fetch categories to show in dropdown
   const categories = await db.category.findMany({
     orderBy: { name: "asc" }
+  });
+
+  // Fetch related articles/products in the same category for the Internal Linking Assistant
+  const relatedArticles = await db.article.findMany({
+    where: {
+      categorySlug: article.categorySlug,
+      id: { not: article.id }
+    },
+    take: 5,
+    select: { id: true, title: true, slug: true, type: true }
+  });
+
+  const relatedProducts = await db.product.findMany({
+    where: { categorySlug: article.categorySlug },
+    take: 5,
+    select: { id: true, name: true }
   });
 
   // Re-parse helpers
@@ -64,7 +81,7 @@ export default async function EditArticlePage({ params }: PageProps) {
     .join("\n\n");
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-955 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto space-y-6">
         
         {/* Back Link */}
@@ -143,7 +160,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               rows={2}
               required
               defaultValue={article.description}
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
             />
           </div>
 
@@ -172,7 +189,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               <select
                 id="status"
                 name="status"
-                defaultValue={article.status}
+                defaultValue={article.status || "published"}
                 className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               >
                 <option value="published">Published (Visible)</option>
@@ -189,7 +206,7 @@ export default async function EditArticlePage({ params }: PageProps) {
                 type="text"
                 id="author"
                 name="author"
-                defaultValue={article.author}
+                defaultValue={article.author || ""}
                 className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
@@ -201,7 +218,7 @@ export default async function EditArticlePage({ params }: PageProps) {
                 type="text"
                 id="date"
                 name="date"
-                defaultValue={article.date}
+                defaultValue={article.date || ""}
                 className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
@@ -217,21 +234,53 @@ export default async function EditArticlePage({ params }: PageProps) {
                 min="0"
                 max="5"
                 defaultValue={article.rating || ""}
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
           </div>
 
-          {/* Main Image */}
+          {/* Unified Image Upload component */}
           <div className="space-y-1.5">
-            <label htmlFor="image" className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Main Feature Image URL</label>
+            <span className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Main Feature Image</span>
+            <ImageUploadInput defaultValue={article.image} name="image" />
+          </div>
+
+          {/* SEO Meta Keywords */}
+          <div className="space-y-1.5">
+            <label htmlFor="keywords" className="text-xs font-bold text-slate-300 uppercase tracking-wider block">SEO Keywords (Comma Separated)</label>
             <input
               type="text"
-              id="image"
-              name="image"
-              defaultValue={article.image}
-              required
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+              id="keywords"
+              name="keywords"
+              defaultValue={article.keywords || ""}
+              placeholder="e.g. air fryer reviews, best air fryers, kitchen appliances"
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+            />
+          </div>
+
+          {/* Long-form Blog Content */}
+          <div className="space-y-1.5">
+            <label htmlFor="content" className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Long-form Blog Content (Supports HTML/Markdown, Optional)</label>
+            <textarea
+              id="content"
+              name="content"
+              rows={8}
+              defaultValue={article.content || ""}
+              placeholder="For Standard Blog Posts, write your full article copy here..."
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
+            />
+          </div>
+
+          {/* Custom Schema block */}
+          <div className="space-y-1.5">
+            <label htmlFor="schema" className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Custom JSON-LD Schema (JSON format, Optional)</label>
+            <textarea
+              id="schema"
+              name="schema"
+              rows={4}
+              defaultValue={article.schema || ""}
+              placeholder='{ "@context": "https://schema.org", "@type": "NewsArticle", ... }'
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
             />
           </div>
 
@@ -244,7 +293,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               rows={4}
               required
               defaultValue={article.introduction}
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
             />
           </div>
 
@@ -256,8 +305,58 @@ export default async function EditArticlePage({ params }: PageProps) {
               id="productIds"
               name="productIds"
               defaultValue={productIdsRaw}
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors font-mono text-xs"
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors font-mono text-xs"
             />
+          </div>
+
+          {/* Internal Linking Assistant */}
+          <div className="border border-slate-850 rounded-xl p-4 bg-slate-950/40 space-y-3">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-primary block">
+              Internal Linking Assistant
+            </h3>
+            <p className="text-[11px] text-slate-400">
+              Copy these links and product IDs in your category ({article.categorySlug}) to use in your post:
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <span className="text-[10px] font-bold text-slate-300 uppercase block tracking-wider">Related Articles</span>
+                {relatedArticles.length === 0 ? (
+                  <p className="text-xs text-slate-500 italic">No other articles in this category.</p>
+                ) : (
+                  <div className="space-y-1.5 max-h-32 overflow-y-auto pr-1">
+                    {relatedArticles.map((rel) => {
+                      const url = rel.type === "blog" ? `/blog/${rel.slug}` : `/best-products/${rel.slug}`;
+                      return (
+                        <div key={rel.id} className="flex flex-col gap-1 p-1.5 rounded bg-slate-900 border border-slate-850 text-xs">
+                          <span className="truncate text-slate-300 font-medium" title={rel.title}>{rel.title}</span>
+                          <code className="text-[10px] bg-slate-950 text-slate-400 px-1 py-0.5 rounded select-all font-mono block w-fit truncate">
+                            {url}
+                          </code>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+              
+              <div className="space-y-2">
+                <span className="text-[10px] font-bold text-slate-300 uppercase block tracking-wider">Related Products</span>
+                {relatedProducts.length === 0 ? (
+                  <p className="text-xs text-slate-500 italic">No products in this category.</p>
+                ) : (
+                  <div className="space-y-1.5 max-h-32 overflow-y-auto pr-1">
+                    {relatedProducts.map((p) => (
+                      <div key={p.id} className="flex flex-col gap-1 p-1.5 rounded bg-slate-900 border border-slate-850 text-xs">
+                        <span className="truncate text-slate-300 font-medium" title={p.name}>{p.name}</span>
+                        <code className="text-[10px] bg-slate-950 text-slate-400 px-1 py-0.5 rounded select-all font-mono block w-fit">
+                          {p.id}
+                        </code>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
           {/* Quick Recommendations (Guides Only) */}
@@ -315,7 +414,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               name="topPicks"
               rows={3}
               defaultValue={topPicksRaw}
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
             />
           </div>
 
@@ -327,7 +426,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               name="buyingGuide"
               rows={6}
               defaultValue={buyingGuideRaw}
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
             />
           </div>
 
@@ -339,7 +438,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               name="faqs"
               rows={4}
               defaultValue={faqsRaw}
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
             />
           </div>
 
@@ -351,7 +450,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               name="verdict"
               rows={3}
               defaultValue={article.verdict || ""}
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
             />
           </div>
 
@@ -363,7 +462,7 @@ export default async function EditArticlePage({ params }: PageProps) {
                 type="text"
                 id="seoTitle"
                 name="seoTitle"
-                defaultValue={article.seoTitle}
+                defaultValue={article.seoTitle || ""}
                 className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
@@ -373,7 +472,7 @@ export default async function EditArticlePage({ params }: PageProps) {
                 type="text"
                 id="seoDescription"
                 name="seoDescription"
-                defaultValue={article.seoDescription}
+                defaultValue={article.seoDescription || ""}
                 className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>

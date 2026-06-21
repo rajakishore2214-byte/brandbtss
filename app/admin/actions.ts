@@ -3,21 +3,30 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
-
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
 
 // Helper to ensure input is secure or validate credentials if needed
-// (Our basic auth proxy handles page protection; actions execute in server context)
 async function verifyAdminAuth() {
   const headersList = await headers();
   const basicAuth = headersList.get("authorization");
   
-  if (!basicAuth) {
+  let authValue = "";
+  if (basicAuth) {
+    authValue = basicAuth.split(" ")[1];
+  } else {
+    // Try cookie fallback for Server Actions triggered via fetch
+    const cookieStore = await cookies();
+    const adminTokenCookie = cookieStore.get("admin_token");
+    if (adminTokenCookie) {
+      authValue = adminTokenCookie.value;
+    }
+  }
+  
+  if (!authValue) {
     throw new Error("Unauthorized access. Admin authentication required.");
   }
   
   try {
-    const authValue = basicAuth.split(" ")[1];
     const [user, pwd] = atob(authValue).split(":");
     const adminUser = process.env.ADMIN_USER || "admin";
     const adminPassword = process.env.ADMIN_PASSWORD || "password123";
@@ -29,7 +38,6 @@ async function verifyAdminAuth() {
     throw new Error("Unauthorized: Invalid admin credentials.");
   }
 }
-
 
 // PRODUCT CRUD ACTIONS
 export async function createProduct(formData: FormData) {
@@ -47,7 +55,10 @@ export async function createProduct(formData: FormData) {
   const dealTag = (formData.get("dealTag") as string) || null;
   const score = parseInt(formData.get("score") as string) || 80;
   const featured = formData.get("featured") === "true";
-  const status = formData.get("status") as string || "active";
+  const status = (formData.get("status") as string) || "active";
+  const keywords = (formData.get("keywords") as string) || null;
+  const primaryKeyword = (formData.get("primaryKeyword") as string) || null;
+  const secondaryKeywords = (formData.get("secondaryKeywords") as string) || null;
 
   // Parse arrays and spec objects
   const features = JSON.stringify(
@@ -83,7 +94,6 @@ export async function createProduct(formData: FormData) {
   const specs = JSON.stringify(specsObj);
 
   // Parse affiliate URLs JSON
-  // Expect format: network|url|price
   const affiliateUrlsRaw = formData.get("affiliateUrls") as string || "";
   const affiliateUrlsList = affiliateUrlsRaw
     .split("\n")
@@ -121,6 +131,9 @@ export async function createProduct(formData: FormData) {
       featured,
       status,
       affiliateUrls,
+      keywords,
+      primaryKeyword,
+      secondaryKeywords,
     },
   });
 
@@ -145,7 +158,10 @@ export async function updateProduct(formData: FormData) {
   const dealTag = (formData.get("dealTag") as string) || null;
   const score = parseInt(formData.get("score") as string) || 80;
   const featured = formData.get("featured") === "true";
-  const status = formData.get("status") as string || "active";
+  const status = (formData.get("status") as string) || "active";
+  const keywords = (formData.get("keywords") as string) || null;
+  const primaryKeyword = (formData.get("primaryKeyword") as string) || null;
+  const secondaryKeywords = (formData.get("secondaryKeywords") as string) || null;
 
   const features = JSON.stringify(
     (formData.get("features") as string || "")
@@ -215,6 +231,9 @@ export async function updateProduct(formData: FormData) {
       featured,
       status,
       affiliateUrls,
+      keywords,
+      primaryKeyword,
+      secondaryKeywords,
     },
   });
 
@@ -251,6 +270,11 @@ export async function createArticle(formData: FormData) {
   const seoTitle = formData.get("seoTitle") as string || title;
   const seoDescription = formData.get("seoDescription") as string || description;
   const status = formData.get("status") as string || "published";
+  
+  // Blog-specific schema updates
+  const keywords = (formData.get("keywords") as string) || null;
+  const content = (formData.get("content") as string) || null;
+  const schema = (formData.get("schema") as string) || null;
 
   // Parse links
   const productIds = JSON.stringify(
@@ -326,6 +350,9 @@ export async function createArticle(formData: FormData) {
       seoTitle,
       seoDescription,
       status,
+      keywords,
+      content,
+      schema,
     },
   });
 
@@ -352,6 +379,11 @@ export async function updateArticle(formData: FormData) {
   const seoTitle = formData.get("seoTitle") as string || title;
   const seoDescription = formData.get("seoDescription") as string || description;
   const status = formData.get("status") as string || "published";
+
+  // Blog-specific schema updates
+  const keywords = (formData.get("keywords") as string) || null;
+  const content = (formData.get("content") as string) || null;
+  const schema = (formData.get("schema") as string) || null;
 
   const productIds = JSON.stringify(
     (formData.get("productIds") as string || "")
@@ -423,6 +455,9 @@ export async function updateArticle(formData: FormData) {
       seoTitle,
       seoDescription,
       status,
+      keywords,
+      content,
+      schema,
     },
   });
 
@@ -440,4 +475,91 @@ export async function deleteArticle(id: string) {
   });
   revalidatePath("/admin/articles");
   revalidatePath("/");
+}
+
+export async function importRawText(formData: FormData) {
+  const { parseProductFromText, generateProductReview } = await import("@/lib/ai");
+  await verifyAdminAuth();
+  const text = formData.get("text") as string;
+  if (!text || !text.trim()) {
+    throw new Error("No text provided for ingestion.");
+  }
+  
+  const parsedProduct = await parseProductFromText(text);
+  
+  // Auto-create category if missing
+  let category = await db.category.findUnique({
+    where: { slug: parsedProduct.categorySlug }
+  });
+  
+  if (!category) {
+    category = await db.category.create({
+      data: {
+        slug: parsedProduct.categorySlug,
+        name: parsedProduct.categorySlug
+          .split("-")
+          .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(" "),
+        description: `Automated category for ${parsedProduct.categorySlug}`,
+        image: "/images/category-placeholder.png",
+        seoTitle: `Best ${parsedProduct.categorySlug} Reviews`,
+        seoDescription: `Find reviews and ratings for ${parsedProduct.categorySlug}.`
+      }
+    });
+  }
+
+  const featuresStr = JSON.stringify(parsedProduct.features || []);
+  const prosStr = JSON.stringify(parsedProduct.pros || []);
+  const consStr = JSON.stringify(parsedProduct.cons || []);
+  const specsStr = JSON.stringify(parsedProduct.specs || {});
+  const affiliateUrlsStr = JSON.stringify(parsedProduct.affiliateUrls || []);
+
+  const product = await db.product.upsert({
+    where: { id: parsedProduct.id },
+    create: {
+      id: parsedProduct.id,
+      name: parsedProduct.name,
+      brand: parsedProduct.brand,
+      categorySlug: parsedProduct.categorySlug,
+      price: parsedProduct.price,
+      originalPrice: parsedProduct.originalPrice,
+      rating: parsedProduct.rating || 4.5,
+      image: parsedProduct.image || "/images/product-placeholder.png",
+      description: parsedProduct.description || "",
+      features: featuresStr,
+      pros: prosStr,
+      cons: consStr,
+      specs: specsStr,
+      affiliateUrls: affiliateUrlsStr,
+      keywords: parsedProduct.keywords,
+      primaryKeyword: parsedProduct.primaryKeyword,
+      secondaryKeywords: parsedProduct.secondaryKeywords
+    },
+    update: {
+      name: parsedProduct.name,
+      brand: parsedProduct.brand,
+      categorySlug: parsedProduct.categorySlug,
+      price: parsedProduct.price,
+      originalPrice: parsedProduct.originalPrice,
+      rating: parsedProduct.rating || 4.5,
+      image: parsedProduct.image || "/images/product-placeholder.png",
+      description: parsedProduct.description || "",
+      features: featuresStr,
+      pros: prosStr,
+      cons: consStr,
+      specs: specsStr,
+      affiliateUrls: affiliateUrlsStr,
+      keywords: parsedProduct.keywords,
+      primaryKeyword: parsedProduct.primaryKeyword,
+      secondaryKeywords: parsedProduct.secondaryKeywords
+    }
+  });
+
+  // Generate review draft automatically
+  await generateProductReview(product.id);
+
+  revalidatePath("/");
+  revalidatePath("/admin/products");
+  revalidatePath("/admin/articles");
+  redirect("/admin/products");
 }

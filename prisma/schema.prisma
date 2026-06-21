@@ -21,27 +21,30 @@ model Category {
 }
 
 model Product {
-  id             String    @id
-  name           String
-  brand          String
-  categorySlug   String
+  id              String    @id
+  name            String
+  brand           String
+  categorySlug    String
   subcategorySlug String?
-  price          Int
-  originalPrice  Int?
-  rating         Float
-  image          String
-  description    String
-  features       String    // JSON string representing string[]
-  pros           String    // JSON string representing string[]
-  cons           String    // JSON string representing string[]
-  specs          String    // JSON string representing Record<string, string>
-  dealTag        String?
-  score          Int       @default(80)
-  featured       Boolean   @default(false)
-  status         String    @default("active") // "active" | "archived"
-  affiliateUrls  String    // JSON: [{ network, url, price, primary? }]
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  price           Int
+  originalPrice   Int?
+  rating          Float
+  image           String
+  description     String
+  features        String    // JSON string representing string[]
+  pros            String    // JSON string representing string[]
+  cons            String    // JSON string representing string[]
+  specs           String    // JSON string representing Record<string, string>
+  dealTag         String?
+  score           Int       @default(80)
+  featured        Boolean   @default(false)
+  status          String    @default("active") // "active" | "archived"
+  affiliateUrls   String    // JSON: [{ network, url, price, primary? }]
+  keywords        String?
+  primaryKeyword  String?
+  secondaryKeywords String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Comparison {
@@ -80,6 +83,9 @@ model Article {
   seoTitle            String
   seoDescription      String
   status              String    @default("published") // "published" | "draft"
+  keywords            String?
+  content             String?
+  schema              String?
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 }

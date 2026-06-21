@@ -13,7 +13,7 @@ export const categories: Category[] = [
     slug: "hosting",
     name: "Web Hosting & Servers",
     description: "Speed, uptime, and server response time are crucial for affiliate conversions. We test and review managed WordPress hosting, shared plans, and cloud VPS for affiliate sites.",
-    image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=800",
+    image: "/images/web_hosting.png",
     featuredProducts: ["hostinger-managed-wordpress", "bluehost-shared-hosting", "wpengine-managed-cloud"],
     seoTitle: "Best Web Hosting for Affiliate Marketing Websites | BrandBTSS",
     seoDescription: "Find the best hosting solutions for your affiliate blog or store. Independent response time metrics, uptime testing, and budget-friendly plan breakdowns."

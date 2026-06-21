@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, Save, Plus } from "lucide-react";
 import { createProduct } from "@/app/admin/actions";
 import { db } from "@/lib/db";
+import ImageUploadInput from "@/components/ImageUploadInput";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +29,7 @@ export default async function NewProductPage() {
           <h1 className="text-2xl font-black text-white flex items-center gap-2">
             <Plus className="h-6 w-6 text-primary" /> Add New Product
           </h1>
-          <p className="text-xs text-slate-400 mt-1">Create a new product card with pricing and affiliate shortlinks</p>
+          <p className="text-xs text-slate-400 mt-1">Create a new product card with pricing, keywords, and affiliate shortlinks</p>
         </div>
 
         {/* Form */}
@@ -44,7 +45,7 @@ export default async function NewProductPage() {
                 name="id"
                 placeholder="e.g. philips-airfryer-hd9252"
                 required
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
               <span className="text-[10px] text-slate-500 block">Use lowercase letters and dashes only. No spaces.</span>
             </div>
@@ -58,7 +59,7 @@ export default async function NewProductPage() {
                 name="name"
                 placeholder="e.g. Essential Digital Air Fryer"
                 required
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -73,7 +74,7 @@ export default async function NewProductPage() {
                 name="brand"
                 placeholder="e.g. Philips"
                 required
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
 
@@ -84,7 +85,7 @@ export default async function NewProductPage() {
                 id="categorySlug"
                 name="categorySlug"
                 required
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               >
                 {categories.map((cat) => (
                   <option key={cat.slug} value={cat.slug}>
@@ -104,7 +105,7 @@ export default async function NewProductPage() {
                 id="subcategorySlug"
                 name="subcategorySlug"
                 placeholder="e.g. air-fryers"
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
 
@@ -116,7 +117,7 @@ export default async function NewProductPage() {
                 id="dealTag"
                 name="dealTag"
                 placeholder="e.g. Save 45% or Best Seller"
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -131,7 +132,7 @@ export default async function NewProductPage() {
                 name="price"
                 placeholder="e.g. 4999"
                 required
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
 
@@ -143,7 +144,7 @@ export default async function NewProductPage() {
                 id="originalPrice"
                 name="originalPrice"
                 placeholder="e.g. 8999"
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
 
@@ -157,7 +158,7 @@ export default async function NewProductPage() {
                 min="1"
                 max="100"
                 placeholder="e.g. 92"
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -175,7 +176,7 @@ export default async function NewProductPage() {
                 max="5"
                 placeholder="e.g. 4.6"
                 required
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
 
@@ -185,7 +186,7 @@ export default async function NewProductPage() {
               <select
                 id="featured"
                 name="featured"
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               >
                 <option value="false">No (Standard Catalog)</option>
                 <option value="true">Yes (Showcase on Homepage)</option>
@@ -198,7 +199,7 @@ export default async function NewProductPage() {
               <select
                 id="status"
                 name="status"
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               >
                 <option value="active">Active (Visible)</option>
                 <option value="archived">Archived (Hidden)</option>
@@ -206,17 +207,50 @@ export default async function NewProductPage() {
             </div>
           </div>
 
-          {/* Image */}
+          {/* SEO Keywords Upgrade */}
+          <div className="p-4 rounded-xl border border-slate-800 bg-slate-950/40 space-y-4">
+            <h3 className="text-xs font-black text-slate-200 uppercase tracking-widest border-b border-slate-800 pb-2">SEO Keyword Tuning</h3>
+            
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-1.5">
+                <label htmlFor="primaryKeyword" className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Primary Keyword</label>
+                <input
+                  type="text"
+                  id="primaryKeyword"
+                  name="primaryKeyword"
+                  placeholder="e.g. best air fryer in India"
+                  className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label htmlFor="secondaryKeywords" className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Secondary Keywords (Comma Separated)</label>
+                <input
+                  type="text"
+                  id="secondaryKeywords"
+                  name="secondaryKeywords"
+                  placeholder="e.g. digital airfryer, healthy frying, oil free snacks"
+                  className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label htmlFor="keywords" className="text-xs font-bold text-slate-300 uppercase tracking-wider block">General Meta Keywords (Comma Separated)</label>
+              <input
+                type="text"
+                id="keywords"
+                name="keywords"
+                placeholder="e.g. philips, airfryer, kitchen, healthy, buy online"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+              />
+            </div>
+          </div>
+
+          {/* Unified Image Upload component */}
           <div className="space-y-1.5">
-            <label htmlFor="image" className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Image URL</label>
-            <input
-              type="text"
-              id="image"
-              name="image"
-              placeholder="e.g. https://images.unsplash.com/photo-..."
-              required
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
-            />
+            <span className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Product Image</span>
+            <ImageUploadInput name="image" />
           </div>
 
           {/* Description */}
@@ -228,7 +262,7 @@ export default async function NewProductPage() {
               rows={4}
               required
               placeholder="Provide a detailed description of the product and testing summary..."
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
             />
           </div>
 
@@ -240,7 +274,7 @@ export default async function NewProductPage() {
               name="features"
               rows={4}
               placeholder="4.1 Liters Capacity&#10;7 touch presets&#10;90% less oil consumption"
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
             />
           </div>
 
@@ -253,7 +287,7 @@ export default async function NewProductPage() {
                 name="pros"
                 rows={4}
                 placeholder="Extremely easy to clean&#10;Consistent heating texture"
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
               />
             </div>
 
@@ -265,7 +299,7 @@ export default async function NewProductPage() {
                 name="cons"
                 rows={4}
                 placeholder="Smaller basket capacity&#10;Beeper sound is loud"
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
               />
             </div>
           </div>
@@ -278,7 +312,7 @@ export default async function NewProductPage() {
               name="specs"
               rows={5}
               placeholder="Capacity = 4.1 Liters&#10;Power = 1400 Watts&#10;Controls = Digital Touchscreen&#10;Warranty = 2 Years"
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
             />
           </div>
 
@@ -290,7 +324,7 @@ export default async function NewProductPage() {
               name="affiliateUrls"
               rows={4}
               placeholder="Amazon | https://link.amazon/A03V0DFKE | 4999&#10;Flipkart | https://fktr.in/0TLcJu7 | 5100"
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
             />
             <span className="text-[10px] text-slate-500 block">Provide the Merchant/Network name, followed by your redirect/referral URL, and the price at that shop. Separate each with a pipe `|` symbol.</span>
           </div>

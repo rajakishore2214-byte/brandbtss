@@ -14,7 +14,7 @@ export default async function AdminProductsDashboard() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 py-10">
+    <div className="min-h-screen bg-slate-955 text-slate-100 py-6 sm:py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
         
         {/* Navigation back and Add Product */}
@@ -38,7 +38,7 @@ export default async function AdminProductsDashboard() {
           <p className="text-xs text-slate-400 mt-1">Manage product specifications, review scores, and merchant details</p>
         </div>
 
-        {/* Product rows table */}
+        {/* Product listing container */}
         {productsList.length === 0 ? (
           <div className="rounded-2xl border border-slate-800 bg-slate-900/10 p-12 text-center text-slate-400">
             <ShoppingBag className="h-12 w-12 mx-auto text-slate-600 mb-4" />
@@ -46,8 +46,10 @@ export default async function AdminProductsDashboard() {
             <p className="text-xs text-slate-500 mt-1">No products found in database.</p>
           </div>
         ) : (
-          <div className="overflow-hidden border border-slate-800 rounded-2xl bg-slate-900/10 shadow-xl">
-            <div className="overflow-x-auto">
+          <div className="space-y-4">
+            
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-hidden border border-slate-800 rounded-2xl bg-slate-900/10 shadow-xl">
               <table className="w-full text-left border-collapse text-xs min-w-[800px]">
                 <thead>
                   <tr className="border-b border-slate-850 bg-slate-900/80 text-slate-300 font-bold uppercase tracking-wider">
@@ -103,6 +105,49 @@ export default async function AdminProductsDashboard() {
                 </tbody>
               </table>
             </div>
+
+            {/* Mobile Cards View */}
+            <div className="grid gap-4 md:hidden">
+              {productsList.map((product: any) => (
+                <div key={product.id} className="rounded-2xl border border-slate-800 bg-slate-900/40 p-4 space-y-3">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <span className="text-[10px] text-slate-500 font-mono select-all block">{product.id}</span>
+                      <span className="font-extrabold text-white text-sm block mt-0.5">{product.brand} {product.name}</span>
+                      <span className="text-[10px] capitalize text-slate-400 font-bold bg-slate-800 px-2 py-0.5 rounded-full inline-block mt-1">{product.categorySlug}</span>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <span className="text-sm font-extrabold text-primary">{formatINR(product.price)}</span>
+                      {product.originalPrice && (
+                        <span className="text-[10px] text-slate-500 line-through">{formatINR(product.originalPrice)}</span>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center text-[11px] pt-3 border-t border-slate-800/60">
+                    <div className="flex gap-4">
+                      <span className="flex items-center gap-1 font-semibold text-slate-300">
+                        <Star className="h-3 w-3 fill-current text-amber-500" /> {product.rating}
+                      </span>
+                      <span className="flex items-center gap-1 font-bold text-emerald-400">
+                        <ShieldCheck className="h-3.5 w-3.5" /> {product.score}/100
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      <Link
+                        href={`/admin/products/${product.id}/edit`}
+                        className="inline-flex h-8 px-3 items-center justify-center rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-semibold"
+                        title="Edit Product"
+                      >
+                        Edit
+                      </Link>
+                      <DeleteProductButton id={product.id} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
           </div>
         )}
 
