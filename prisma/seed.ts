@@ -91,6 +91,33 @@ async function main() {
       seoDescription: "Maximize your productivity and wellness. Independent reviews of fitness treadmills, dumbbells, travel accessories, and office desk setups.",
       parentSlug: null,
     },
+    {
+      slug: "fashion",
+      name: "Fashion & Clothing",
+      description: "Discover the best women's ethnic wear, office dresses, men's t-shirts, casual shirts, accessories, and shoes. Real quality reviews and buying guidelines.",
+      image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Latest Fashion & Clothing Reviews & Buying Guides | BrandBTSS",
+      seoDescription: "Explore clothing and fashion reviews. Buy the best budget and premium kurtis, sarees, shirts, jeans, and formal wear options.",
+      parentSlug: null,
+    },
+    {
+      slug: "cameras-photography",
+      name: "Cameras & Photography",
+      description: "Expert reviews of mirrorless cameras, beginner DSLRs, lenses, tripods, and action cameras for creators, travelers, and professional photographers.",
+      image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Best Cameras & Photography Gear Reviews | BrandBTSS",
+      seoDescription: "Unlock your photography potential. In-depth comparisons of cameras, lenses, filters, and digital studio lighting kits.",
+      parentSlug: null,
+    },
+    {
+      slug: "software",
+      name: "Software & Digital Products",
+      description: "High-value digital tools, premium VPN connections, managed cloud server hosts, and AI writer utilities reviewed for maximum efficiency.",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Best Software, VPNs & AI Productivity Tools | BrandBTSS",
+      seoDescription: "Compare the best VPN subscriptions,Managed Cloud host packages, and content-writing AI tools with independent benchmarks.",
+      parentSlug: null,
+    },
 
     // Subcategories - Home & Kitchen
     {
@@ -149,6 +176,33 @@ async function main() {
       seoDescription: "Find the best bluetooth speaker for your bedroom or outdoor treks. Uptime battery, audio response, and water resistance testing.",
       parentSlug: "gadgets",
     },
+    {
+      slug: "laptops",
+      name: "Laptops & Notebooks",
+      description: "Student, gaming, and business laptops evaluated on battery life, processing speeds, and graphic rendering.",
+      image: "https://images.unsplash.com/photo-1496181130204-7552cc14ac1a?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Best Student, Gaming & Office Laptops Reviewed | BrandBTSS",
+      seoDescription: "Compare features and benchmarks of top budget and performance laptops on Amazon and Flipkart.",
+      parentSlug: "gadgets",
+    },
+    {
+      slug: "smartphones",
+      name: "Smartphones & Mobiles",
+      description: "Budget smartphones, camera devices, and flagship mobiles tested on processor performance and display panel consistency.",
+      image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Best Budget, Camera & Premium Smartphones | BrandBTSS",
+      seoDescription: "Stay connected. Honest specs analysis, camera shootouts, and battery run-down tests of top mobile devices.",
+      parentSlug: "gadgets",
+    },
+    {
+      slug: "gadget-accessories",
+      name: "Tech Accessories",
+      description: "Fast chargers, heavy-duty power banks, custom keyboards, and ergonomic mouse models.",
+      image: "https://images.unsplash.com/photo-1609592424089-9a7cd118ba82?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Best Power Banks, Chargers & Keyboards | BrandBTSS",
+      seoDescription: "Maximize your workspace setup. Reviews of high-utility charging bricks and computing peripherals.",
+      parentSlug: "gadgets",
+    },
 
     // Subcategories - Home Decor
     {
@@ -167,6 +221,24 @@ async function main() {
       image: "https://images.unsplash.com/photo-1531243269054-5ebf6f3b0b6e?auto=format&fit=crop&q=80&w=800",
       seoTitle: "Creative Wall Decor & Artistic Frames | BrandBTSS",
       seoDescription: "Personalize your living room. Reviews of aesthetic hangings, shelves, and modern wall artwork sets.",
+      parentSlug: "home-decor",
+    },
+    {
+      slug: "furniture",
+      name: "Furniture & Stands",
+      description: "Multi-functional tables, ergonomic office chairs, space-saving racks, and home furniture items.",
+      image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Top Home Furniture & Office Seating Reviews | BrandBTSS",
+      seoDescription: "Elevate comfort levels. Buy the best ergonomic chairs, study desks, and aesthetic stands.",
+      parentSlug: "home-decor",
+    },
+    {
+      slug: "home-improvement",
+      name: "Home Improvement",
+      description: "Organizers, smart door locks, power drills, and maintenance utilities for modern home maintenance.",
+      image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Best Home Improvement Tools & Door Locks | BrandBTSS",
+      seoDescription: "DIY upgrades. Reviews of high-utility smart locks, tool sets, and space organizer brackets.",
       parentSlug: "home-decor",
     },
 
@@ -188,13 +260,73 @@ async function main() {
       seoTitle: "Best Travel Gear, Suitcases & Bags | BrandBTSS",
       seoDescription: "Travel smart. Reviews of trolley suitcases, anti-theft backpacks, and high-utility tech cases.",
       parentSlug: "lifestyle",
+    },
+
+    // Subcategories - Fashion
+    {
+      slug: "womens-fashion",
+      name: "Women's Fashion",
+      description: "Sarees, kurtis, matching co-ord sets, workwear, and ethnic outfits from top brands.",
+      image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Best Kurtis, Sarees & Ethnic Outfits Reviewed | BrandBTSS",
+      seoDescription: "Stay stylish. Reviews of high-quality fabrics, trendiest sarees, and comfortable office outfits on Amazon/Flipkart.",
+      parentSlug: "fashion",
+    },
+    {
+      slug: "mens-fashion",
+      name: "Men's Fashion",
+      description: "Casual shirts, formal shirts, t-shirts, branded jeans, premium watches, and durable shoes.",
+      image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Best Men's Shirts, Jeans & Casual Wear | BrandBTSS",
+      seoDescription: "Wardrobe essentials. Buy the highest-rated casual shirts, polo t-shirts, and everyday shoes.",
+      parentSlug: "fashion",
+    },
+
+    // Subcategories - Cameras & Photography
+    {
+      slug: "cameras",
+      name: "Cameras & Lenses",
+      description: "DSLRs, mirrorless cameras, action cams, and zoom/prime lenses for crisp visual captures.",
+      image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Top Mirrorless Cameras & Prime Lenses Reviews | BrandBTSS",
+      seoDescription: "Capture moments. Comparison charts for beginner DSLRs and high-performance landscape lenses.",
+      parentSlug: "cameras-photography",
+    },
+    {
+      slug: "camera-accessories",
+      name: "Camera Accessories",
+      description: "Camera bags, tripods, studio flash lights, lens filters, and continuous LED ring lights.",
+      image: "https://images.unsplash.com/photo-1495707902641-75cac588d2e9?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Best Camera Tripods, Lens Filters & Studio Gear | BrandBTSS",
+      seoDescription: "Equip your gear. Honest reviews of portable tripods, ring lights, and travel camera backpacks.",
+      parentSlug: "cameras-photography",
+    },
+
+    // Subcategories - Software & Digital Products
+    {
+      slug: "vpn",
+      name: "VPN Services",
+      description: "NordVPN, Surfshark, and top virtual private network clients benchmarked on streaming speeds and geo-unblocking capabilities.",
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Best VPN for Security, Privacy & Geo-Unblocking | BrandBTSS",
+      seoDescription: "Surf securely. Detailed benchmarks of connection speeds, server networks, and log-free audits.",
+      parentSlug: "software",
+    },
+    {
+      slug: "ai-tools",
+      name: "AI & Productivity Tools",
+      description: "ChatGPT, Jasper,Writesonic, and SEO auditing software tested on content output speed and natural language generation.",
+      image: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&q=80&w=800",
+      seoTitle: "Best AI Writing Assistant & Content Optimization Tools | BrandBTSS",
+      seoDescription: "Optimize workflows. Reviews of top AI copywriters, generators, and Surfer SEO integrations.",
+      parentSlug: "software",
     }
   ];
 
   for (const cat of categoriesData) {
     await prisma.category.create({ data: cat });
   }
-  console.log("Seeded 18 Categories and Subcategories successfully.");
+  console.log(`Seeded ${categoriesData.length} Categories and Subcategories successfully.`);
 
   // 2. Seed Products
   const productsData = [
