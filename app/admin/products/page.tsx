@@ -5,6 +5,8 @@ import { db } from "@/lib/db";
 import { formatINR } from "@/lib/utils";
 import DeleteProductButton from "@/components/DeleteProductButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminProductsDashboard() {
   // Fetch products from database
   const productsList = await db.product.findMany({

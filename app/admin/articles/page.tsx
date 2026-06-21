@@ -4,6 +4,8 @@ import { ArrowLeft, BookOpen, Plus, Edit, Calendar, User, Tag } from "lucide-rea
 import { db } from "@/lib/db";
 import DeleteArticleButton from "@/components/DeleteArticleButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminArticlesDashboard() {
   // Fetch articles from database
   const articlesList = await db.article.findMany({

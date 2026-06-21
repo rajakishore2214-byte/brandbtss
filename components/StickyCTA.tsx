@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ExternalLink, Star } from "lucide-react";
+import Image from "next/image";
 import { Product } from "@/data/products";
 import { formatINR } from "@/lib/utils";
 
@@ -33,11 +34,15 @@ export default function StickyCTA({ product }: StickyCTAProps) {
       <div className="mx-auto max-w-5xl flex items-center justify-between gap-4">
         {/* Product Info Thumbnail */}
         <div className="flex items-center gap-3 min-w-0">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg object-cover bg-slate-100 shrink-0"
-          />
+          <div className="relative h-10 w-10 sm:h-12 sm:w-12 rounded-lg overflow-hidden shrink-0 bg-slate-100">
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              sizes="(max-width: 640px) 40px, 48px"
+              className="object-cover"
+            />
+          </div>
           <div className="min-w-0">
             <h4 className="font-bold text-xs sm:text-sm text-slate-900 truncate">{product.name}</h4>
             <div className="flex items-center gap-1 sm:gap-1.5 mt-0.5">

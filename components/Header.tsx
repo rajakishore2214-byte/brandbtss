@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, TrendingUp, Home, Cpu, Zap, Shirt, Briefcase } from "lucide-react";
@@ -10,10 +10,10 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  // Close menu on path change
-  useEffect(() => {
+  // Close menu on path change helper
+  const handleLinkClick = () => {
     setIsOpen(false);
-  }, [pathname]);
+  };
 
   const navLinks = [
     { label: "Home & Kitchen", href: "/roundup/best-home-kitchen-amazon", icon: Home },
@@ -82,7 +82,7 @@ export default function Header() {
             {navLinks.map((link) => {
               const Icon = link.icon;
               return (
-                <Link key={link.href} href={link.href} className="flex items-center gap-2 hover:text-primary">
+                <Link key={link.href} href={link.href} onClick={handleLinkClick} className="flex items-center gap-2 hover:text-primary">
                   <Icon className="h-4 w-4 opacity-70" />
                   {link.label}
                 </Link>
@@ -90,6 +90,7 @@ export default function Header() {
             })}
             <Link
               href="/roundup/best-electronics-gadgets-amazon"
+              onClick={handleLinkClick}
               className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-center text-sm font-bold text-primary-text hover:bg-primary-hover"
             >
               Top Amazon Picks

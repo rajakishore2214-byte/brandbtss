@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { Star, CheckCircle2, XCircle, ArrowRight, ExternalLink } from "lucide-react";
+import { Star, CheckCircle2, XCircle, ExternalLink } from "lucide-react";
 import { formatINR } from "@/lib/utils";
 import { urlFor } from "@/lib/sanity.image";
 
@@ -28,7 +29,7 @@ interface ProductCardProps {
     priceText?: string;
     affiliateSlug?: string;
     ctaText?: string;
-    logo?: any;
+    logo?: { asset?: { _ref: string; _type: string } } | null | undefined;
   };
   index?: number;
   featured?: boolean;
@@ -130,10 +131,12 @@ export default function ProductCard({
 
       {/* Product Image */}
       <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
-        <img
+        <Image
           src={imageUrl}
           alt={name}
-          className="h-full w-full object-cover hover:scale-105 transition-transform duration-500"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover hover:scale-105 transition-transform duration-500"
         />
       </div>
 

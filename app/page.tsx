@@ -126,7 +126,7 @@ export default async function Home() {
           <section className="space-y-8">
             <div className="space-y-2">
               <span className="inline-flex items-center gap-1 rounded bg-indigo-50 px-2.5 py-1 text-xs font-bold text-indigo-700 uppercase tracking-wider">
-                <Flame className="h-3.5 w-3.5 fill-current" /> Editor's Picks
+                <Flame className="h-3.5 w-3.5 fill-current" /> Editor&apos;s Picks
               </span>
               <h2 className="text-3xl font-black text-slate-900 tracking-tight leading-none">
                 Featured Freelance Guides

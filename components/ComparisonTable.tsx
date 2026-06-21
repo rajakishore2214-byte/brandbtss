@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Star, Check, ExternalLink } from "lucide-react";
+import Image from "next/image";
 import { Product } from "@/data/products";
 import { formatINR } from "@/lib/utils";
 import AffiliateButton from "./AffiliateButton";
@@ -43,11 +44,15 @@ export default function ComparisonTable({ table, productsList, campaign }: Compa
                 {productsList.map((product) => (
                   <th key={product.id} className="p-4 min-w-[200px]">
                     <div className="flex items-center gap-3">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="h-12 w-12 rounded-lg object-cover bg-slate-100"
-                      />
+                      <div className="relative h-12 w-12 rounded-lg overflow-hidden shrink-0 bg-slate-100">
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          fill
+                          sizes="48px"
+                          className="object-cover"
+                        />
+                      </div>
                       <div className="min-w-0">
                         <span className="text-[10px] font-semibold text-slate-400 block truncate">{product.brand}</span>
                         <h4 className="font-bold text-sm text-slate-900 truncate">{product.name}</h4>

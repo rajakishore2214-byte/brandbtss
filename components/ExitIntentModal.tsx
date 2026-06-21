@@ -55,7 +55,7 @@ export default function ExitIntentModal() {
 
           <div className="space-y-2">
             <h3 className="font-display text-2xl font-black tracking-tight">
-              Wait! Don't Miss Out
+              Wait! Don&apos;t Miss Out
             </h3>
             <p className="text-sm text-slate-300">
               We just updated our reviews of the best project management and invoice tracking software. Save up to <span className="font-bold text-amber-400">55% off</span> on premium subscriptions.

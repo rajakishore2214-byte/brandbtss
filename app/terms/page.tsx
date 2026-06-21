@@ -22,7 +22,7 @@ export default function TermsPage() {
 
         <div className="prose prose-slate max-w-none text-xs sm:text-sm text-slate-600 space-y-6 leading-relaxed">
           <p>
-            Welcome to <strong>BrandBTSS</strong>. These terms and conditions outline the rules and regulations for the use of BrandBTSS's Website, located at https://brandbtss.com.
+            Welcome to <strong>BrandBTSS</strong>. These terms and conditions outline the rules and regulations for the use of BrandBTSS&apos;s Website, located at https://brandbtss.com.
           </p>
 
           <h2 className="text-lg font-bold text-slate-900 mt-6">1. Acceptance of Terms</h2>
@@ -48,7 +48,7 @@ export default function TermsPage() {
 
           <h2 className="text-lg font-bold text-slate-900 mt-6">4. Links to External Sites & Affiliate Disclaimer</h2>
           <p>
-            Our service may contain links to external sites (like Hostinger, ConvertKit, Semrush, etc.) that are not operated by us. Clicking an affiliate link will redirect you to that merchant's portal. We have no control over, and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.
+            Our service may contain links to external sites (like Hostinger, ConvertKit, Semrush, etc.) that are not operated by us. Clicking an affiliate link will redirect you to that merchant&apos;s portal. We have no control over, and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.
           </p>
 
           <h2 className="text-lg font-bold text-slate-900 mt-6">5. Limitation of Liability</h2>

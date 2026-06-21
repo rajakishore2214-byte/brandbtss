@@ -4,11 +4,36 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 
+import { headers } from "next/headers";
+
 // Helper to ensure input is secure or validate credentials if needed
 // (Our basic auth proxy handles page protection; actions execute in server context)
+async function verifyAdminAuth() {
+  const headersList = await headers();
+  const basicAuth = headersList.get("authorization");
+  
+  if (!basicAuth) {
+    throw new Error("Unauthorized access. Admin authentication required.");
+  }
+  
+  try {
+    const authValue = basicAuth.split(" ")[1];
+    const [user, pwd] = atob(authValue).split(":");
+    const adminUser = process.env.ADMIN_USER || "admin";
+    const adminPassword = process.env.ADMIN_PASSWORD || "password123";
+    
+    if (user !== adminUser || pwd !== adminPassword) {
+      throw new Error("Unauthorized: Invalid admin credentials.");
+    }
+  } catch (e) {
+    throw new Error("Unauthorized: Invalid admin credentials.");
+  }
+}
+
 
 // PRODUCT CRUD ACTIONS
 export async function createProduct(formData: FormData) {
+  await verifyAdminAuth();
   const id = formData.get("id") as string;
   const name = formData.get("name") as string;
   const brand = formData.get("brand") as string;
@@ -106,6 +131,7 @@ export async function createProduct(formData: FormData) {
 }
 
 export async function updateProduct(formData: FormData) {
+  await verifyAdminAuth();
   const id = formData.get("id") as string;
   const name = formData.get("name") as string;
   const brand = formData.get("brand") as string;
@@ -200,6 +226,7 @@ export async function updateProduct(formData: FormData) {
 }
 
 export async function deleteProduct(id: string) {
+  await verifyAdminAuth();
   await db.product.delete({
     where: { id },
   });
@@ -209,6 +236,7 @@ export async function deleteProduct(id: string) {
 
 // ARTICLE CRUD ACTIONS
 export async function createArticle(formData: FormData) {
+  await verifyAdminAuth();
   const slug = formData.get("slug") as string;
   const type = formData.get("type") as string;
   const title = formData.get("title") as string;
@@ -308,6 +336,7 @@ export async function createArticle(formData: FormData) {
 }
 
 export async function updateArticle(formData: FormData) {
+  await verifyAdminAuth();
   const id = formData.get("id") as string;
   const slug = formData.get("slug") as string;
   const type = formData.get("type") as string;
@@ -405,6 +434,7 @@ export async function updateArticle(formData: FormData) {
 }
 
 export async function deleteArticle(id: string) {
+  await verifyAdminAuth();
   await db.article.delete({
     where: { id },
   });

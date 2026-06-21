@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowLeft, MousePointerClick, Calendar, Globe, Monitor } from "lucide-react";
 import { db } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminClicksLog() {
   // Fetch up to 100 recent clicks
   const clicks = await db.click.findMany({

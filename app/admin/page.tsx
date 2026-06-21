@@ -3,6 +3,8 @@ import Link from "next/link";
 import { BarChart3, MousePointerClick, Layers, ShoppingBag, PlusCircle, ArrowUpRight, CheckCircle2, TrendingUp } from "lucide-react";
 import { db } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboard() {
   // DB Queries for real-time metrics
   const totalClicks = await db.click.count();
