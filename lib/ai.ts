@@ -309,7 +309,7 @@ Return the details ONLY as JSON matching the specified schema.
       keywords: parsed.keywords,
       content: "",
       schema: parsed.schema
-    }
+    } as any
   });
 
   // Send Telegram Notification

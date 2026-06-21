@@ -134,7 +134,7 @@ export async function createProduct(formData: FormData) {
       keywords,
       primaryKeyword,
       secondaryKeywords,
-    },
+    } as any,
   });
 
   revalidatePath("/");
@@ -234,7 +234,7 @@ export async function updateProduct(formData: FormData) {
       keywords,
       primaryKeyword,
       secondaryKeywords,
-    },
+    } as any,
   });
 
   revalidatePath("/");
@@ -353,7 +353,7 @@ export async function createArticle(formData: FormData) {
       keywords,
       content,
       schema,
-    },
+    } as any,
   });
 
   revalidatePath("/");
@@ -458,7 +458,7 @@ export async function updateArticle(formData: FormData) {
       keywords,
       content,
       schema,
-    },
+    } as any,
   });
 
   revalidatePath("/");
@@ -534,7 +534,7 @@ export async function importRawText(formData: FormData) {
       keywords: parsedProduct.keywords,
       primaryKeyword: parsedProduct.primaryKeyword,
       secondaryKeywords: parsedProduct.secondaryKeywords
-    },
+    } as any,
     update: {
       name: parsedProduct.name,
       brand: parsedProduct.brand,
@@ -552,7 +552,7 @@ export async function importRawText(formData: FormData) {
       keywords: parsedProduct.keywords,
       primaryKeyword: parsedProduct.primaryKeyword,
       secondaryKeywords: parsedProduct.secondaryKeywords
-    }
+    } as any
   });
 
   // Generate review draft automatically

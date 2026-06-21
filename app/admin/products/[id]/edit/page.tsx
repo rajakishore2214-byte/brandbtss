@@ -16,9 +16,9 @@ export default async function EditProductPage({ params }: PageProps) {
   const { id } = await params;
   
   // Fetch product to edit
-  const product = await db.product.findUnique({
+  const product = (await db.product.findUnique({
     where: { id }
-  });
+  })) as any;
 
   if (!product) {
     notFound();

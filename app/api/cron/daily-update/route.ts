@@ -15,9 +15,9 @@ export async function GET(req: NextRequest) {
     }
 
     // 1. Scan for products lacking review articles
-    const products = await db.product.findMany({
-      select: { id: true, name: true, keywords: true }
-    });
+    const products = (await db.product.findMany({
+      select: { id: true, name: true, keywords: true } as any
+    })) as any[];
     
     const articles = await db.article.findMany({
       where: { type: "review" },

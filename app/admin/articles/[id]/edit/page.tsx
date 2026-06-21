@@ -16,9 +16,9 @@ export default async function EditArticlePage({ params }: PageProps) {
   const { id } = await params;
   
   // Fetch article
-  const article = await db.article.findUnique({
+  const article = (await db.article.findUnique({
     where: { id }
-  });
+  })) as any;
 
   if (!article) {
     notFound();
