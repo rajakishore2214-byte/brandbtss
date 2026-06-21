@@ -159,7 +159,6 @@ export async function POST(req: NextRequest) {
       const specsStr = JSON.stringify(parsedProduct.specs || {});
       const affiliateUrlsStr = JSON.stringify(parsedProduct.affiliateUrls || []);
 
-      // @ts-ignore
       const product = await db.product.upsert({
         where: { id: parsedProduct.id },
         create: {
@@ -180,7 +179,7 @@ export async function POST(req: NextRequest) {
           keywords: parsedProduct.keywords,
           primaryKeyword: parsedProduct.primaryKeyword,
           secondaryKeywords: parsedProduct.secondaryKeywords
-        },
+        } as any,
         update: {
           name: parsedProduct.name,
           brand: parsedProduct.brand,
@@ -198,7 +197,7 @@ export async function POST(req: NextRequest) {
           keywords: parsedProduct.keywords,
           primaryKeyword: parsedProduct.primaryKeyword,
           secondaryKeywords: parsedProduct.secondaryKeywords
-        }
+        } as any
       });
 
       await sendReply(chatId, `📦 <b>Product Ingested & Saved!</b>\n<b>ID:</b> <code>${product.id}</code>\n<b>Name:</b> ${product.name}\n\n✍️ Triggering AI review generation...`);
