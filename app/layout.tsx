@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Inter, Outfit, Lora } from "next/font/google";
 import "../styles/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -15,6 +15,12 @@ const inter = Inter({
 
 const outfit = Outfit({
   variable: "--font-outfit",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const lora = Lora({
+  variable: "--font-serif",
   subsets: ["latin"],
   display: "swap",
 });
@@ -69,7 +75,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${outfit.variable} h-full antialiasedScroll`}
+      className={`${inter.variable} ${lora.variable} ${outfit.variable} h-full antialiasedScroll`}
     >
       <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 font-sans">
         {gtmId && (

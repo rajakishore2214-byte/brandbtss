@@ -33,11 +33,11 @@ export default function ComparisonTable({ table, productsList, campaign }: Compa
     );
 
     return (
-      <div className="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="w-full overflow-hidden rounded-lg border border-slate-200 bg-white">
         <div className="overflow-x-auto">
           <table className="w-full table-fixed border-collapse text-left">
             <thead>
-              <tr className="border-b border-slate-100 bg-slate-50/70">
+              <tr className="border-b border-slate-200 bg-[#FAF9F6]">
                 <th className="w-48 p-4 text-xs font-bold uppercase tracking-wider text-slate-500">
                   Specifications
                 </th>
@@ -120,15 +120,15 @@ export default function ComparisonTable({ table, productsList, campaign }: Compa
               </tr>
 
               {/* CTA Buttons Row */}
-              <tr className="border-t border-slate-200 bg-slate-50/20">
-                <td className="p-4 font-semibold text-slate-900 bg-slate-50/35">Action</td>
+              <tr className="border-t border-slate-200 bg-[#FAF9F6]">
+                <td className="p-4 font-semibold text-slate-900 bg-[#FAF9F6] capitalize">Action</td>
                 {productsList.map((product) => (
                   <td key={product.id} className="p-4">
                     <a
                       href={product.affiliateUrl}
                       target="_blank"
                       rel="sponsored nofollow"
-                      className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-amber-500 py-2.5 px-3 text-center text-xs font-black text-slate-950 hover:bg-amber-600 hover:shadow-md active:scale-95 transition-all"
+                      className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-primary py-2.5 px-3 text-center text-xs font-black text-white hover:bg-primary-hover hover:shadow-md hover:shadow-primary/10 active:scale-95 transition-all"
                     >
                       Check Price
                       <ExternalLink className="h-3 w-3" />
@@ -148,16 +148,16 @@ export default function ComparisonTable({ table, productsList, campaign }: Compa
     return (
       <div className="my-8 space-y-4">
         {table.title && (
-          <h3 className="font-display text-lg font-bold text-slate-800 tracking-tight">
+          <h3 className="font-serif text-lg font-bold text-slate-900 tracking-tight">
             {table.title}
           </h3>
         )}
 
         {/* Desktop Table View */}
-        <div className="hidden md:block w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="hidden md:block w-full overflow-hidden rounded-lg border border-slate-200 bg-white">
           <table className="w-full border-collapse text-left">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50">
+              <tr className="border-b border-slate-200 bg-[#FAF9F6]">
                 <th className="p-4 text-xs font-bold uppercase tracking-wider text-slate-500">Tool Name</th>
                 <th className="p-4 text-xs font-bold uppercase tracking-wider text-slate-500">Best For</th>
                 <th className="p-4 text-xs font-bold uppercase tracking-wider text-slate-500">Starting Price</th>
@@ -167,10 +167,10 @@ export default function ComparisonTable({ table, productsList, campaign }: Compa
             </thead>
             <tbody className="divide-y divide-slate-100 text-sm text-slate-700">
               {table.rows.map((row, index) => (
-                <tr key={index} className="hover:bg-slate-50/50 transition-colors">
+                <tr key={index} className="hover:bg-[#FAF9F6]/50 transition-colors">
                   <td className="p-4 font-bold text-slate-900">{row.toolName}</td>
                   <td className="p-4">
-                    <span className="inline-flex items-center gap-1 text-xs text-indigo-600 font-semibold bg-indigo-50 px-2.5 py-1 rounded-full">
+                    <span className="inline-flex items-center gap-1 text-[10px] text-primary font-black uppercase tracking-wider bg-primary/10 px-2 py-0.5 rounded-sm">
                       {row.bestFor || "General"}
                     </span>
                   </td>
@@ -202,10 +202,10 @@ export default function ComparisonTable({ table, productsList, campaign }: Compa
           {table.rows.map((row, index) => (
             <div
               key={index}
-              className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-4"
+              className="rounded-lg border border-slate-200 bg-white p-5 space-y-4"
             >
               <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
-                <h4 className="font-display font-bold text-slate-900 text-base">{row.toolName}</h4>
+                <h4 className="font-serif font-bold text-slate-900 text-base">{row.toolName}</h4>
                 
                 {row.rating && (
                   <div className="flex items-center gap-1 text-xs font-bold text-amber-500">

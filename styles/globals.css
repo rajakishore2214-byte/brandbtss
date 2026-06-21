@@ -3,11 +3,11 @@
 :root {
   --background: #f8fafc; /* Slate 50 */
   --foreground: #0f172a; /* Slate 900 */
-  --primary: #FFB800; /* Logo Gold Yellow */
-  --primary-hover: #E0A200;
-  --primary-text: #09090b; /* Dark text for contrast on Gold */
-  --accent: #FFB800; /* Gold */
-  --accent-hover: #E0A200;
+  --primary: #E15500; /* Wirecutter Orange */
+  --primary-hover: #C14400;
+  --primary-text: #ffffff; /* White text for contrast on Orange */
+  --accent: #E15500;
+  --accent-hover: #C14400;
   --success: #10b981; /* Emerald 500 */
   --danger: #ef4444; /* Rose 500 */
 }
@@ -25,6 +25,7 @@
   
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif), Georgia, serif;
 }
 
 body {

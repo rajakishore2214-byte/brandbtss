@@ -88,19 +88,21 @@ export default function ProductCard({
 
   // Determine Badge
   let badgeText = product.dealTag || "";
-  let badgeColor = "bg-amber-500 text-slate-900";
+  let badgeColor = "bg-primary text-white font-black rounded-sm";
 
   if (!badgeText) {
     if (isPrismaPrice && product.price! <= 1000) {
-      badgeText = "Best Budget";
-      badgeColor = "bg-emerald-600 text-white";
+      badgeText = "BUDGET PICK";
+      badgeColor = "bg-emerald-600 text-white font-black rounded-xs";
     } else if (rating >= 4.8) {
-      badgeText = "Top Rated";
-      badgeColor = "bg-primary text-primary-text font-bold";
+      badgeText = "OUR PICK";
+      badgeColor = "bg-primary text-white font-black rounded-xs";
     } else {
-      badgeText = "Editor's Choice";
-      badgeColor = "bg-slate-800 text-slate-200";
+      badgeText = "ALSO GREAT";
+      badgeColor = "bg-slate-700 text-slate-100 font-black rounded-xs";
     }
+  } else {
+    badgeText = badgeText.toUpperCase();
   }
 
   // Create review link check
@@ -109,13 +111,13 @@ export default function ProductCard({
 
   return (
     <div
-      className={`relative flex flex-col overflow-hidden rounded-2xl border bg-white shadow-sm hover:shadow-xl transition-all duration-300 ${
-        featured ? "border-primary/50 ring-2 ring-primary/10" : "border-slate-200"
+      className={`relative flex flex-col overflow-hidden rounded-lg border bg-white shadow-xs hover:border-primary/30 transition-all duration-300 ${
+        featured ? "border-primary ring-2 ring-primary/10" : "border-slate-200"
       }`}
     >
       {/* Index Number Badge */}
       {index !== undefined && (
-        <div className="absolute top-0 left-0 z-10 flex h-10 w-10 items-center justify-center rounded-br-2xl bg-primary font-display text-lg font-black text-primary-text">
+        <div className="absolute top-0 left-0 z-10 flex h-7 px-3.5 items-center justify-center rounded-br-lg bg-primary font-sans text-xs font-black text-white">
           #{index + 1}
         </div>
       )}
@@ -123,20 +125,20 @@ export default function ProductCard({
       {/* Ribbon Badge */}
       {badgeText && (
         <span
-          className={`absolute top-4 right-4 z-10 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${badgeColor}`}
+          className={`absolute top-4 right-4 z-10 px-2.5 py-1 text-[9px] font-black uppercase tracking-wider ${badgeColor}`}
         >
           {badgeText}
         </span>
       )}
 
       {/* Product Image */}
-      <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
+      <div className="relative aspect-video w-full overflow-hidden bg-slate-50 border-b border-slate-100">
         <Image
           src={imageUrl}
           alt={name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover hover:scale-105 transition-transform duration-500"
+          className="object-cover hover:scale-103 transition-transform duration-500"
         />
       </div>
 
@@ -145,35 +147,35 @@ export default function ProductCard({
         <div>
           {/* Brand and category */}
           {(brand || category) && (
-            <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
+            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
               {brand && <span>{brand}</span>}
               {brand && category && <span>•</span>}
               {category && <span className="capitalize">{category}</span>}
             </div>
           )}
 
-          <h3 className="mt-2 text-xl font-bold text-slate-900 hover:text-primary transition-colors">
+          <h3 className="mt-2 text-lg sm:text-xl font-black text-slate-900 hover:text-primary transition-colors tracking-tight leading-snug">
             {name}
           </h3>
 
           {/* Rating */}
-          <div className="mt-2.5 flex items-center gap-1.5">
+          <div className="mt-2 flex items-center gap-1.5">
             <div className="flex items-center text-amber-500">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`h-4 w-4 fill-current ${
+                  className={`h-3.5 w-3.5 fill-current ${
                     i < Math.floor(rating) ? "" : "text-slate-200 fill-none"
                   }`}
                 />
               ))}
             </div>
-            <span className="text-sm font-semibold text-slate-700">{rating} / 5</span>
+            <span className="text-xs font-bold text-slate-700">{rating} / 5</span>
           </div>
 
           {/* Product Description */}
           {description && (
-            <p className="mt-4 text-sm text-slate-600 leading-relaxed line-clamp-3">
+            <p className="mt-4 text-sm sm:text-base text-slate-700 leading-relaxed font-serif line-clamp-4">
               {description}
             </p>
           )}
@@ -194,7 +196,7 @@ export default function ProductCard({
             <div className="mt-5 space-y-3">
               {pros.length > 0 && (
                 <div className="space-y-1.5">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Pros</span>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Pros</span>
                   {pros.slice(0, 2).map((pro, i) => (
                     <div key={i} className="flex items-start gap-2 text-xs text-slate-600">
                       <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500 mt-0.5" />
@@ -205,7 +207,7 @@ export default function ProductCard({
               )}
               {cons.length > 0 && (
                 <div className="space-y-1.5">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Cons</span>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Cons</span>
                   {cons.slice(0, 1).map((con, i) => (
                     <div key={i} className="flex items-start gap-2 text-xs text-slate-600">
                       <XCircle className="h-4 w-4 shrink-0 text-rose-500 mt-0.5" />
@@ -222,7 +224,7 @@ export default function ProductCard({
         <div className="mt-8 pt-4 border-t border-slate-100">
           <div className="flex items-baseline justify-between mb-4">
             <div>
-              <span className="text-[10px] uppercase font-bold text-slate-400 block">Best Price</span>
+              <span className="text-[9px] uppercase font-bold text-slate-400 block tracking-wider">Best Price</span>
               <div className="flex items-center gap-2">
                 <span className="text-2xl font-black text-slate-950">{priceDisplay}</span>
                 {originalPriceDisplay && (
@@ -231,7 +233,7 @@ export default function ProductCard({
               </div>
             </div>
             {discountPercent && (
-              <span className="text-xs font-bold text-emerald-600">
+              <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">
                 Save {discountPercent}%
               </span>
             )}
@@ -240,7 +242,7 @@ export default function ProductCard({
           <div className="grid grid-cols-2 gap-3">
             <Link
               href={reviewLink}
-              className="inline-flex items-center justify-center gap-1 rounded-xl border border-slate-200 bg-slate-50 py-3 text-center text-xs font-bold text-slate-700 hover:bg-slate-100 hover:text-slate-900 active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-1 rounded-lg border border-slate-200 bg-slate-50 py-3 text-center text-xs font-bold text-slate-700 hover:bg-slate-100 hover:text-slate-900 active:scale-98 transition-all"
             >
               Read Review
             </Link>
@@ -249,7 +251,7 @@ export default function ProductCard({
               href={redirectHref}
               target="_blank"
               rel="sponsored nofollow"
-              className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-amber-500 py-3 px-2 text-center text-xs font-black text-slate-950 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/20 active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-primary py-3 px-2 text-center text-xs font-black text-white hover:bg-primary-hover hover:shadow-md hover:shadow-primary/10 active:scale-98 transition-all"
             >
               {ctaText}
               <ExternalLink className="h-3.5 w-3.5" />

@@ -28,7 +28,7 @@ export default function AffiliateButton({
       href={redirectHref}
       target="_blank"
       rel="nofollow sponsored"
-      className={`inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 py-3 px-6 text-center text-sm font-black text-slate-950 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/20 active:scale-95 transition-all duration-200 cursor-pointer ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-lg bg-primary py-3 px-6 text-center text-sm font-black text-white hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/10 active:scale-95 transition-all duration-200 cursor-pointer ${className}`}
     >
       <span>{text}</span>
       <svg
