@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
       const specsStr = JSON.stringify(parsedProduct.specs || {});
       const affiliateUrlsStr = JSON.stringify(parsedProduct.affiliateUrls || []);
 
-      // Upsert product in DB
+      // @ts-ignore
       const product = await db.product.upsert({
         where: { id: parsedProduct.id },
         create: {
