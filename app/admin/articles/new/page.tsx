@@ -14,7 +14,7 @@ export default async function NewArticlePage() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="admin-dark min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto space-y-6">
         
         {/* Back Link */}
@@ -45,7 +45,7 @@ export default async function NewArticlePage() {
                 name="slug"
                 placeholder="e.g. best-air-fryers-under-5000"
                 required
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
               <span className="text-[10px] text-slate-500 block">Use lowercase and dashes. No leading slash.</span>
             </div>
@@ -57,7 +57,7 @@ export default async function NewArticlePage() {
                 id="type"
                 name="type"
                 required
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               >
                 <option value="best">Buying Guide (Best Roundups)</option>
                 <option value="review">Single Product Review</option>
@@ -77,7 +77,7 @@ export default async function NewArticlePage() {
               name="title"
               placeholder="e.g. Best Digital Air Fryers Under ₹5000 in India (2026)"
               required
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
             />
           </div>
 
@@ -90,7 +90,7 @@ export default async function NewArticlePage() {
               rows={2}
               required
               placeholder="A brief summary of what you review or benchmark in this post..."
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
             />
           </div>
 
@@ -102,7 +102,7 @@ export default async function NewArticlePage() {
                 id="categorySlug"
                 name="categorySlug"
                 required
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               >
                 {categories.map((cat) => (
                   <option key={cat.slug} value={cat.slug}>
@@ -118,7 +118,7 @@ export default async function NewArticlePage() {
               <select
                 id="status"
                 name="status"
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               >
                 <option value="published">Published (Visible)</option>
                 <option value="draft">Draft (Hidden)</option>
@@ -135,7 +135,7 @@ export default async function NewArticlePage() {
                 id="author"
                 name="author"
                 placeholder="e.g. Sneha Nair"
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
 
@@ -147,7 +147,7 @@ export default async function NewArticlePage() {
                 id="date"
                 name="date"
                 placeholder="e.g. June 20, 2026"
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
 
@@ -162,7 +162,7 @@ export default async function NewArticlePage() {
                 min="0"
                 max="5"
                 placeholder="e.g. 4.8"
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -181,7 +181,7 @@ export default async function NewArticlePage() {
               id="keywords"
               name="keywords"
               placeholder="e.g. air fryer reviews, best air fryers, kitchen appliances, healthy cooking"
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
             />
           </div>
 
@@ -193,7 +193,7 @@ export default async function NewArticlePage() {
               name="content"
               rows={8}
               placeholder="For Standard Blog Posts, write your full article copy here..."
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
             />
           </div>
 
@@ -205,7 +205,7 @@ export default async function NewArticlePage() {
               name="schema"
               rows={4}
               placeholder='{ "@context": "https://schema.org", "@type": "NewsArticle", ... }'
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
             />
           </div>
 
@@ -217,7 +217,7 @@ export default async function NewArticlePage() {
               name="introduction"
               rows={4}
               placeholder="Write a catchy introduction setting up the testing parameters and review outline..."
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
             />
           </div>
 
@@ -229,7 +229,7 @@ export default async function NewArticlePage() {
               id="productIds"
               name="productIds"
               placeholder="e.g. solara-digital-air-fryer, philips-air-fryer-hd9252"
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors font-mono text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors font-mono text-xs"
             />
             <span className="text-[10px] text-slate-500 block">Link products from the database catalog to automatically display their spec matrixes and product details inline.</span>
           </div>
@@ -276,7 +276,7 @@ export default async function NewArticlePage() {
                 name="quickRecSummary"
                 rows={2}
                 placeholder="Briefly state who should buy what pick..."
-                className="w-full rounded-lg bg-slate-955 border border-slate-800 focus:border-primary px-3 py-1.5 text-xs text-white focus:outline-none resize-y"
+                className="w-full rounded-lg bg-slate-950 border border-slate-800 focus:border-primary px-3 py-1.5 text-xs text-white focus:outline-none resize-y"
               />
             </div>
           </div>
@@ -289,7 +289,7 @@ export default async function NewArticlePage() {
               name="topPicks"
               rows={3}
               placeholder="solara-digital-air-fryer | Best Budget & Capacity | Offers a massive capacity for small families under 5000.&#10;philips-air-fryer-hd9252 | Editor's Choice | Cooks foods the most consistently."
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
             />
           </div>
 
@@ -301,7 +301,7 @@ export default async function NewArticlePage() {
               name="buyingGuide"
               rows={6}
               placeholder="How We Tested Air Fryers&#10;===&#10;We cooked frozen french fries, samosas, and roasted paneer across 30 days to measure heating speed, consistency, and mesh basket washing utility.&#10;&#10;What to look for before buying&#10;===&#10;Consider capacity, cleanability, digital touch presets, and electrical power consumption in watts."
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
             />
           </div>
 
@@ -313,7 +313,7 @@ export default async function NewArticlePage() {
               name="faqs"
               rows={4}
               placeholder="Can we use foil inside an air fryer?&#10;===&#10;Yes, but never run it preheating without food on top. The powerful convection fan will blow it directly into the heating element.&#10;&#10;How much power does it use?&#10;===&#10;It usually runs between 1400W and 1800W. Since cooking sessions are short, it uses very minimal electricity (around 3 to 5 INR per meal)."
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
             />
           </div>
 
@@ -325,7 +325,7 @@ export default async function NewArticlePage() {
               name="verdict"
               rows={3}
               placeholder="For cooks who value absolute reliability and durability, this product represents the best premium benchmark..."
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
             />
           </div>
 
@@ -338,7 +338,7 @@ export default async function NewArticlePage() {
                 id="seoTitle"
                 name="seoTitle"
                 placeholder="Google Search title tag..."
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
             <div className="space-y-1.5">
@@ -348,7 +348,7 @@ export default async function NewArticlePage() {
                 id="seoDescription"
                 name="seoDescription"
                 placeholder="Google Search description snippet..."
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -369,3 +369,4 @@ export default async function NewArticlePage() {
     </div>
   );
 }
+

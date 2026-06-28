@@ -3,13 +3,18 @@
 :root {
   --background: #f8fafc; /* Slate 50 */
   --foreground: #0f172a; /* Slate 900 */
-  --primary: #E15500; /* Wirecutter Orange */
+  --primary: #E15500; /* BrandBTSS Orange */
   --primary-hover: #C14400;
-  --primary-text: #ffffff; /* White text for contrast on Orange */
+  --primary-text: #ffffff;
   --accent: #E15500;
   --accent-hover: #C14400;
   --success: #10b981; /* Emerald 500 */
   --danger: #ef4444; /* Rose 500 */
+  /* Admin dark palette */
+  --admin-bg: #03060f;       /* True near-black for admin */
+  --admin-surface: #0d1117;  /* Card surface */
+  --admin-border: #1e2a3a;   /* Subtle border */
+  --admin-muted: #1a2332;    /* Muted card bg */
 }
 
 @theme inline {
@@ -35,13 +40,32 @@ body {
   overflow-x: hidden;
 }
 
+/* Admin panel scoped dark theme */
+.admin-dark {
+  background: var(--admin-bg) !important;
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+.admin-card {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: 1rem;
+}
+
+.admin-card-muted {
+  background: var(--admin-muted);
+  border: 1px solid var(--admin-border);
+  border-radius: 0.75rem;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
 }
 
 /* Custom transitions and scrollbar utilities */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
@@ -52,6 +76,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+/* Admin dark scrollbar */
+.admin-dark ::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+.admin-dark ::-webkit-scrollbar-thumb {
+  background: #1e2a3a;
+}
+.admin-dark ::-webkit-scrollbar-thumb:hover {
+  background: #2a3a50;
 }
 
 /* Glassmorphism Design Token Utility classes */

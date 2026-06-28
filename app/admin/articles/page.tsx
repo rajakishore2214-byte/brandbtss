@@ -21,7 +21,7 @@ export default async function AdminArticlesDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-955 text-slate-100 py-6 sm:py-10">
+    <div className="admin-dark min-h-screen py-6 sm:py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
         
         {dbError && (
@@ -204,3 +204,4 @@ export default async function AdminArticlesDashboard() {
     </div>
   );
 }
+

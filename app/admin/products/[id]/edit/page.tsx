@@ -48,7 +48,7 @@ export default async function EditProductPage({ params }: PageProps) {
     .join("\n");
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="admin-dark min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto space-y-6">
         
         {/* Back Link */}
@@ -91,7 +91,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 name="name"
                 defaultValue={product.name}
                 required
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
 
@@ -104,7 +104,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 name="brand"
                 defaultValue={product.brand}
                 required
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -118,7 +118,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 name="categorySlug"
                 defaultValue={product.categorySlug}
                 required
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               >
                 {categories.map((cat) => (
                   <option key={cat.slug} value={cat.slug}>
@@ -137,7 +137,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 name="subcategorySlug"
                 defaultValue={product.subcategorySlug || ""}
                 placeholder="e.g. air-fryers"
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -152,7 +152,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 name="dealTag"
                 defaultValue={product.dealTag || ""}
                 placeholder="e.g. Save 45% or Best Seller"
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
 
@@ -166,7 +166,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 min="1"
                 max="100"
                 defaultValue={product.score}
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -181,7 +181,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 name="price"
                 defaultValue={product.price}
                 required
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
 
@@ -194,7 +194,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 name="originalPrice"
                 defaultValue={product.originalPrice || ""}
                 placeholder="e.g. 8999"
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
 
@@ -210,7 +210,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 max="5"
                 defaultValue={product.rating}
                 required
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -223,7 +223,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 id="featured"
                 name="featured"
                 defaultValue={product.featured ? "true" : "false"}
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               >
                 <option value="false">No (Standard Catalog)</option>
                 <option value="true">Yes (Showcase on Homepage)</option>
@@ -237,7 +237,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 id="status"
                 name="status"
                 defaultValue={product.status}
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               >
                 <option value="active">Active (Visible)</option>
                 <option value="archived">Archived (Hidden)</option>
@@ -258,7 +258,7 @@ export default async function EditProductPage({ params }: PageProps) {
                   name="primaryKeyword"
                   defaultValue={product.primaryKeyword || ""}
                   placeholder="e.g. best air fryer in India"
-                  className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                  className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
                 />
               </div>
 
@@ -270,7 +270,7 @@ export default async function EditProductPage({ params }: PageProps) {
                   name="secondaryKeywords"
                   defaultValue={product.secondaryKeywords || ""}
                   placeholder="e.g. digital airfryer, healthy frying, oil free snacks"
-                  className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                  className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
                 />
               </div>
             </div>
@@ -283,7 +283,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 name="keywords"
                 defaultValue={product.keywords || ""}
                 placeholder="e.g. philips, airfryer, kitchen, healthy, buy online"
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -304,7 +304,7 @@ export default async function EditProductPage({ params }: PageProps) {
               required
               defaultValue={product.description}
               placeholder="Provide a detailed description of the product..."
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
             />
           </div>
 
@@ -316,7 +316,7 @@ export default async function EditProductPage({ params }: PageProps) {
               name="features"
               rows={4}
               defaultValue={featuresRaw}
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
             />
           </div>
 
@@ -329,7 +329,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 name="pros"
                 rows={4}
                 defaultValue={prosRaw}
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
               />
             </div>
 
@@ -341,7 +341,7 @@ export default async function EditProductPage({ params }: PageProps) {
                 name="cons"
                 rows={4}
                 defaultValue={consRaw}
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
               />
             </div>
           </div>
@@ -354,7 +354,7 @@ export default async function EditProductPage({ params }: PageProps) {
               name="specs"
               rows={5}
               defaultValue={specsRaw}
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
             />
           </div>
 
@@ -366,7 +366,7 @@ export default async function EditProductPage({ params }: PageProps) {
               name="affiliateUrls"
               rows={4}
               defaultValue={affiliateUrlsRaw}
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
             />
           </div>
 

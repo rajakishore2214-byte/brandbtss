@@ -140,7 +140,7 @@ function LoginForm() {
           >
             {/* Panel Header */}
             <div className="flex flex-col items-center text-center space-y-3 mb-8">
-              <div className="h-16 w-16 rounded-full bg-slate-955 border border-slate-800 flex items-center justify-center p-1.5 shadow-inner hover:scale-105 transition-transform duration-300">
+              <div className="h-16 w-16 rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center p-1.5 shadow-inner hover:scale-105 transition-transform duration-300">
                 <img
                   src="/logo.png"
                   alt="BrandBTSS"
@@ -280,3 +280,4 @@ export default function AdminLoginPage() {
     </Suspense>
   );
 }
+

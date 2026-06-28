@@ -81,7 +81,7 @@ export default async function EditArticlePage({ params }: PageProps) {
     .join("\n\n");
 
   return (
-    <div className="min-h-screen bg-slate-955 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="admin-dark min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto space-y-6">
         
         {/* Back Link */}
@@ -160,7 +160,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               rows={2}
               required
               defaultValue={article.description}
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
             />
           </div>
 
@@ -234,7 +234,7 @@ export default async function EditArticlePage({ params }: PageProps) {
                 min="0"
                 max="5"
                 defaultValue={article.rating || ""}
-                className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -254,7 +254,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               name="keywords"
               defaultValue={article.keywords || ""}
               placeholder="e.g. air fryer reviews, best air fryers, kitchen appliances"
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors"
             />
           </div>
 
@@ -267,7 +267,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               rows={8}
               defaultValue={article.content || ""}
               placeholder="For Standard Blog Posts, write your full article copy here..."
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
             />
           </div>
 
@@ -280,7 +280,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               rows={4}
               defaultValue={article.schema || ""}
               placeholder='{ "@context": "https://schema.org", "@type": "NewsArticle", ... }'
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
             />
           </div>
 
@@ -293,7 +293,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               rows={4}
               required
               defaultValue={article.introduction}
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
             />
           </div>
 
@@ -305,7 +305,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               id="productIds"
               name="productIds"
               defaultValue={productIdsRaw}
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors font-mono text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors font-mono text-xs"
             />
           </div>
 
@@ -414,7 +414,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               name="topPicks"
               rows={3}
               defaultValue={topPicksRaw}
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-mono text-xs"
             />
           </div>
 
@@ -426,7 +426,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               name="buyingGuide"
               rows={6}
               defaultValue={buyingGuideRaw}
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
             />
           </div>
 
@@ -438,7 +438,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               name="faqs"
               rows={4}
               defaultValue={faqsRaw}
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans text-xs"
             />
           </div>
 
@@ -450,7 +450,7 @@ export default async function EditArticlePage({ params }: PageProps) {
               name="verdict"
               rows={3}
               defaultValue={article.verdict || ""}
-              className="w-full rounded-xl bg-slate-955 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
+              className="w-full rounded-xl bg-slate-950 border border-slate-800 focus:border-primary px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-y font-sans"
             />
           </div>
 

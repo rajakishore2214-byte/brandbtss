@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export default function ImportPage() {
   return (
-    <div className="min-h-screen bg-slate-955 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="admin-dark min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto space-y-6">
         
         {/* Back Link */}
@@ -63,3 +63,4 @@ Buy on Amazon: https://amazon.in/dp/B08HS8WDF4"
     </div>
   );
 }
+
