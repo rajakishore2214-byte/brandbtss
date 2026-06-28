@@ -563,3 +563,32 @@ export async function importRawText(formData: FormData) {
   revalidatePath("/admin/articles");
   redirect("/admin/products");
 }
+
+// ADMIN LOGIN ACTIONS
+export async function adminLogin(prevState: any, formData: FormData) {
+  const username = formData.get("username") as string;
+  const password = formData.get("password") as string;
+
+  const adminUser = process.env.ADMIN_USER || "admin";
+  const adminPassword = process.env.ADMIN_PASSWORD || "password123";
+
+  if (username === adminUser && password === adminPassword) {
+    const authValue = btoa(`${username}:${password}`);
+    const cookieStore = await cookies();
+    cookieStore.set("admin_token", authValue, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 60 * 60 * 24, // 24 hours
+      path: "/",
+    });
+    return { success: true, error: null };
+  }
+  return { success: false, error: "Invalid admin credentials" };
+}
+
+export async function adminLogout() {
+  const cookieStore = await cookies();
+  cookieStore.delete("admin_token");
+  redirect("/admin/login");
+}

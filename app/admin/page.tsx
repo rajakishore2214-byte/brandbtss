@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { BarChart3, MousePointerClick, Layers, ShoppingBag, PlusCircle, ArrowUpRight, CheckCircle2, TrendingUp } from "lucide-react";
+import { BarChart3, MousePointerClick, Layers, ShoppingBag, PlusCircle, ArrowUpRight, CheckCircle2, TrendingUp, LogOut } from "lucide-react";
 import { db } from "@/lib/db";
+import { adminLogout } from "@/app/admin/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -143,10 +144,18 @@ export default async function AdminDashboard() {
             </Link>
             <Link
               href="/admin/import"
-              className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-xs font-bold text-primary-text hover:bg-primary-hover transition-colors col-span-2 sm:col-span-1"
+              className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-xs font-bold text-primary-text hover:bg-primary-hover transition-colors"
             >
               <PlusCircle className="h-4 w-4" /> Import Note / Links
             </Link>
+            <form action={adminLogout} className="inline-flex">
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-900/50 hover:bg-red-950/20 px-3.5 py-2 text-xs font-bold text-slate-200 hover:text-red-400 transition-colors cursor-pointer"
+              >
+                <LogOut className="h-4 w-4" /> Log Out
+              </button>
+            </form>
           </div>
         </div>
 
