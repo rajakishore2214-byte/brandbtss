@@ -5,7 +5,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/go/*"],
     },
     sitemap: "https://brandbtss.com/sitemap.xml",
   };

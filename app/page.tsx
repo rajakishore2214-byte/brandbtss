@@ -2,13 +2,39 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
-import { ArrowRight, Sparkles, Shield, Award, HelpCircle, Flame, Calendar, Home as HomeIcon, Cpu, Zap, Shirt } from "lucide-react";
+import { ArrowRight, Sparkles, Shield, Award, HelpCircle, Flame, Calendar, Home as HomeIcon, Cpu, Zap, Shirt, Star, ShieldCheck, ShoppingCart, Percent } from "lucide-react";
+import type { Metadata } from "next";
 
 import { getRecentPosts, getPostsBySlugs } from "@/lib/sanity.queries";
 import { urlFor } from "@/lib/sanity.image";
 import SchemaMarkup from "@/components/SchemaMarkup";
+import StructuredData from "@/components/StructuredData";
+import { db, mapDbProduct, mapDbArticle } from "@/lib/db";
+import { formatINR } from "@/lib/utils";
 
 export const revalidate = 3600; // 1-hour cache revalidation (ISR)
+
+export const metadata: Metadata = {
+  title: "BrandBTSS | Honest Independent Software & Product Reviews",
+  description: "Explore unbiased product reviews, side-by-side comparisons, and active discount coupon deals on web hosting, email marketing, and tech accessories.",
+  alternates: {
+    canonical: "https://brandbtss.com",
+  },
+  openGraph: {
+    title: "BrandBTSS | Honest Independent Software & Product Reviews",
+    description: "Explore unbiased product reviews, side-by-side comparisons, and active discount coupon deals on web hosting, email marketing, and tech accessories.",
+    url: "https://brandbtss.com",
+    siteName: "BrandBTSS",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BrandBTSS | Honest Independent Software & Product Reviews",
+    description: "Explore unbiased product reviews, side-by-side comparisons, and active discount coupon deals on web hosting, email marketing, and tech accessories.",
+    creator: "@brandbtss",
+  },
+};
 
 export default async function Home() {
   // Curated slugs for the homepage showcase — Amazon categories + top existing guides
@@ -21,13 +47,67 @@ export default async function Home() {
     "bonsai-invoicing",
   ];
   
-  // Fetch from Sanity
-  const [recentPosts, curatedPosts] = await Promise.all([
-    getRecentPosts(),
-    getPostsBySlugs(curatedSlugs),
-  ]);
+  // 1. Fetch from Database
+  let featuredProducts: any[] = [];
+  let latestDeals: any[] = [];
+  let latestDbArticles: any[] = [];
 
-  // Fallback if no posts are returned (during initial setup)
+  try {
+    let dbFeatured = await db.product.findMany({
+      where: { featured: true, status: "active" },
+      take: 4
+    });
+    if (dbFeatured.length === 0) {
+      dbFeatured = await db.product.findMany({
+        where: { status: "active" },
+        orderBy: { score: "desc" },
+        take: 4
+      });
+    }
+    featuredProducts = dbFeatured.map(mapDbProduct);
+  } catch (err) {
+    console.warn("Failed to query featured products during build/prerender:", err);
+  }
+
+  try {
+    const dbDeals = await db.product.findMany({
+      where: {
+        originalPrice: { not: null },
+        status: "active"
+      },
+      orderBy: { updatedAt: "desc" },
+      take: 3
+    });
+    latestDeals = dbDeals.map(mapDbProduct);
+  } catch (err) {
+    console.warn("Failed to query latest deals during build/prerender:", err);
+  }
+
+  try {
+    const dbArticles = await db.article.findMany({
+      where: { status: "published" },
+      orderBy: { date: "desc" },
+      take: 3
+    });
+    latestDbArticles = dbArticles.map(mapDbArticle);
+  } catch (err) {
+    console.warn("Failed to query latest articles during build/prerender:", err);
+  }
+
+  // 2. Fetch from Sanity
+  let recentPosts: any = null;
+  let curatedPosts: any[] = [];
+  try {
+    const res = await Promise.all([
+      getRecentPosts(),
+      getPostsBySlugs(curatedSlugs),
+    ]);
+    recentPosts = res[0];
+    curatedPosts = res[1];
+  } catch (e) {
+    console.warn("Failing back during Sanity queries:", e);
+  }
+
   const postsToShow = recentPosts || [];
   const featuredPosts = curatedPosts.length > 0 ? curatedPosts : postsToShow.slice(0, 3);
 
@@ -53,6 +133,7 @@ export default async function Home() {
   return (
     <div className="space-y-16 pb-20 bg-slate-50 text-slate-900 font-sans">
       <SchemaMarkup type="home" />
+      <StructuredData type="faq" data={homeFAQs} />
 
       {/* 1. Hero Section */}
       <section className="relative overflow-hidden bg-[#FAF9F6] border-b border-slate-200 py-16 sm:py-24">
@@ -114,7 +195,257 @@ export default async function Home() {
       {/* Main content grid */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-20">
         
-        {/* 2. Featured / Curated Guides Section */}
+        {/* 2. Featured Products Section */}
+        {featuredProducts.length > 0 && (
+          <section className="space-y-6">
+            <div className="space-y-1">
+              <span className="inline-flex items-center gap-1 rounded-sm bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-black text-amber-500 uppercase tracking-wider">
+                🔥 Top Rated Gear
+              </span>
+              <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+                Featured Products
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500">
+                Our editorial team&apos;s highest-scoring and most recommended products, verified through hand-testing.
+              </p>
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {featuredProducts.map((product) => (
+                <div key={product.id} className="group rounded-2xl border border-slate-200 bg-white p-4 flex flex-col justify-between shadow-xs hover:shadow-lg transition-all duration-300">
+                  <div className="space-y-3">
+                    <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-100">
+                      <img src={product.image} alt={product.name} className="h-full w-full object-cover group-hover:scale-102 transition-transform duration-300" />
+                      <div className="absolute top-2 right-2 bg-slate-900/80 backdrop-blur-xs px-2 py-0.5 rounded text-[10px] font-bold text-amber-400 border border-slate-800">
+                        Score: {product.score}/100
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-1 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                        <span>{product.brand}</span>
+                        <span>•</span>
+                        <span className="text-primary">{product.category}</span>
+                      </div>
+                      <h3 className="font-bold text-slate-900 text-sm sm:text-base line-clamp-2 leading-tight min-h-[2.5rem]">
+                        {product.name}
+                      </h3>
+                    </div>
+
+                    <div className="flex items-center gap-1 text-xs text-slate-500">
+                      <div className="flex items-center text-amber-500">
+                        <Star className="h-3.5 w-3.5 fill-current" />
+                      </div>
+                      <span className="font-bold text-slate-800">{product.rating}</span>
+                      <span>•</span>
+                      <span className="text-emerald-600 font-bold flex items-center gap-0.5 text-[11px]">
+                        <ShieldCheck className="h-3.5 w-3.5" /> Hand-Tested
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                      {product.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-slate-100 space-y-2">
+                    <div className="text-lg font-black text-slate-950">{formatINR(product.price)}</div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Link
+                        href={`/reviews/${product.id}-review`}
+                        className="rounded-lg border border-slate-200 py-2 text-center text-[11px] font-bold text-slate-700 hover:bg-slate-50 transition-colors"
+                      >
+                        Read Review
+                      </Link>
+                      <a
+                        href={product.affiliateUrl}
+                        target="_blank"
+                        rel="sponsored nofollow"
+                        className="rounded-lg bg-amber-500 py-2 text-center text-[11px] font-black text-slate-950 hover:bg-amber-600 hover:shadow-xs transition-all flex items-center justify-center gap-0.5"
+                      >
+                        <ShoppingCart className="h-3.5 w-3.5" /> Buy Link
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* 3. Latest Active Deals Section */}
+        {latestDeals.length > 0 && (
+          <section className="space-y-6">
+            <div className="space-y-1">
+              <span className="inline-flex items-center gap-1 rounded-sm bg-rose-500/10 px-2.5 py-0.5 text-[10px] font-black text-rose-500 uppercase tracking-wider">
+                💸 Hand-Picked Discounts
+              </span>
+              <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+                Latest Verified Deals
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500">
+                Save on top-rated software packages and high-quality gadgets with our exclusive coupon codes.
+              </p>
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {latestDeals.map((product) => {
+                const original = product.originalPrice || product.price;
+                const discountPercent = Math.round(((original - product.price) / original) * 100);
+                const couponCode = `BTSS${discountPercent}`;
+
+                return (
+                  <div key={product.id} className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs hover:shadow-md hover:border-rose-500/20 transition-all duration-300 flex flex-col justify-between">
+                    <div className="relative">
+                      {/* Discount Tag */}
+                      <div className="absolute top-3 left-3 z-10 rounded-lg bg-rose-500 px-2.5 py-1 text-[10px] font-black text-white flex items-center gap-0.5 shadow-xs">
+                        <Percent className="h-3 w-3" />
+                        <span>{discountPercent}% OFF</span>
+                      </div>
+                      {/* Image */}
+                      <div className="aspect-video w-full overflow-hidden bg-slate-50">
+                        <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
+                      </div>
+                    </div>
+
+                    {/* Card Body */}
+                    <div className="p-5 flex-1 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-[10px] text-slate-400 font-bold uppercase">
+                          <span>{product.brand}</span>
+                          <span>•</span>
+                          <span>{product.category}</span>
+                        </div>
+                        
+                        <h3 className="font-bold text-slate-900 text-sm sm:text-base line-clamp-1">{product.name}</h3>
+                        
+                        <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                          <div className="flex items-center text-amber-500">
+                            <Star className="h-3.5 w-3.5 fill-current" />
+                          </div>
+                          <span className="font-bold text-slate-800">{product.rating}</span>
+                          <span>•</span>
+                          <span className="text-emerald-600 font-bold flex items-center gap-0.5 text-[11px]">
+                            <ShieldCheck className="h-3.5 w-3.5" /> In Stock
+                          </span>
+                        </div>
+
+                        <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                          {product.description}
+                        </p>
+                      </div>
+
+                      <div className="mt-5 pt-3 border-t border-slate-100 space-y-3">
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-xl font-black text-slate-950">{formatINR(product.price)}</span>
+                          <span className="text-xs text-slate-400 line-through">{formatINR(original)}</span>
+                        </div>
+
+                        {/* Coupon Box */}
+                        <div className="rounded-lg bg-slate-50 border border-slate-200/80 px-3 py-1.5 flex items-center justify-between text-xs">
+                          <div className="text-slate-400 font-medium">Coupon Code:</div>
+                          <div className="font-mono font-bold text-rose-500 bg-rose-50/50 border border-rose-100 rounded px-2 py-0.5 select-all">
+                            {couponCode}
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2 pt-1">
+                          <Link
+                            href={`/reviews/${product.id}-review`}
+                            className="rounded-lg border border-slate-200 py-2.5 text-center text-[11px] font-bold text-slate-700 hover:bg-slate-50 transition-colors"
+                          >
+                            Read Review
+                          </Link>
+                          <a
+                            href={product.affiliateUrl}
+                            target="_blank"
+                            rel="sponsored nofollow"
+                            className="inline-flex items-center justify-center gap-0.5 rounded-lg bg-amber-500 py-2.5 text-center text-[11px] font-black text-slate-955 hover:bg-amber-600 active:scale-98 transition-all"
+                          >
+                            <ShoppingCart className="h-3.5 w-3.5" /> Buy Deal
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* 4. Latest Reviews & Guides Section (Local DB) */}
+        {latestDbArticles.length > 0 && (
+          <section className="space-y-6">
+            <div className="space-y-1">
+              <span className="inline-flex items-center gap-1 rounded-sm bg-primary/10 px-2.5 py-0.5 text-[10px] font-black text-primary uppercase tracking-wider">
+                📰 Expert Content Feed
+              </span>
+              <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+                Latest Reviews &amp; Guides
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500">
+                In-depth product breakdowns, head-to-head match-ups, and step-by-step buyer guidelines.
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {latestDbArticles.map((article) => {
+                let path = `/${article.type}/${article.slug}`;
+                if (article.type === "best") {
+                  path = `/best-products/${article.slug}`;
+                } else if (article.type === "review") {
+                  let productId = article.slug;
+                  if (article.productIds && article.productIds.length > 0) {
+                    productId = article.productIds[0];
+                  }
+                  path = `/reviews/${productId}-review`;
+                }
+                return (
+                  <Link
+                    key={article.slug}
+                    href={path}
+                    className="group flex flex-col justify-between rounded-2xl bg-white border border-slate-200 hover:border-primary/40 hover:shadow-md transition-all duration-300 overflow-hidden"
+                  >
+                    <div>
+                      <div className="relative aspect-video w-full overflow-hidden bg-slate-50 border-b border-slate-100">
+                        <img
+                          src={article.image}
+                          alt={article.title}
+                          className="h-full w-full object-cover group-hover:scale-102 transition-transform duration-500"
+                        />
+                        <span className="absolute bottom-3 left-3 rounded-xs bg-primary px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
+                          {article.type === "review" ? "Review" : article.type === "best" ? "Best Selection" : "Article"}
+                        </span>
+                      </div>
+
+                      <div className="p-5 space-y-2">
+                        <h3 className="font-sans font-black text-base sm:text-lg text-slate-950 group-hover:text-primary transition-colors line-clamp-2 leading-snug tracking-tight">
+                          {article.title}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-slate-500 line-clamp-3 leading-relaxed font-serif">
+                          {article.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="px-5 pb-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="h-3.5 w-3.5 text-slate-400" />
+                        <span>{article.date}</span>
+                      </div>
+                      <span className="font-bold text-primary group-hover:translate-x-0.5 transition-transform flex items-center gap-0.5">
+                        Read Article <ArrowRight className="h-3 w-3" />
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* 5. Curated / Sanity Guides Section */}
         {featuredPosts.length > 0 && (
           <section className="space-y-6">
             <div className="space-y-1">
@@ -130,7 +461,7 @@ export default async function Home() {
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {featuredPosts.map((post) => {
+              {featuredPosts.map((post: any) => {
                 const coverUrl = post.mainImage ? urlFor(post.mainImage).width(600).height(400).url() : null;
                 const authorImageUrl = post.author?.photo ? urlFor(post.author.photo).width(40).height(40).url() : null;
                 return (
@@ -192,7 +523,7 @@ export default async function Home() {
           </section>
         )}
 
-        {/* 3. Amazon Category Showcase Banner */}
+        {/* 6. Amazon Category Showcase Banner */}
         <section className="rounded-lg bg-gradient-to-br from-slate-900 to-slate-950 text-white p-8 md:p-12 relative overflow-hidden border border-slate-800 shadow-sm">
           <div className="absolute top-0 right-0 -mt-10 -mr-10 h-40 w-40 rounded-full bg-primary/10 blur-2xl animate-pulse" />
           <div className="absolute bottom-0 left-0 -mb-10 -ml-10 h-32 w-32 rounded-full bg-primary/5 blur-2xl" />
@@ -233,7 +564,7 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* 4. Recent Reviews list */}
+        {/* 7. Recent Reviews list (Sanity Fallback feed) */}
         {postsToShow.length > 0 && (
           <section className="space-y-6">
             <div className="space-y-1">
@@ -246,7 +577,7 @@ export default async function Home() {
             </div>
 
             <div className="grid gap-6 sm:grid-cols-2">
-              {postsToShow.map((post) => {
+              {postsToShow.map((post: any) => {
                 const coverUrl = post.mainImage ? urlFor(post.mainImage).width(300).height(200).url() : null;
                 return (
                   <Link
@@ -269,7 +600,7 @@ export default async function Home() {
                         {post.postType === "roundup" ? "Roundup" : "Review"}
                       </span>
                       
-                      <h3 className="font-bold text-sm text-slate-950 group-hover:text-primary transition-colors line-clamp-2 leading-snug tracking-tight">
+                      <h3 className="font-bold text-sm text-slate-955 group-hover:text-primary transition-colors line-clamp-2 leading-snug tracking-tight">
                         {post.title}
                       </h3>
                       
@@ -285,7 +616,7 @@ export default async function Home() {
           </section>
         )}
 
-        {/* 5. FAQs Section */}
+        {/* 8. FAQs Section */}
         <section className="space-y-6 max-w-4xl mx-auto">
           <div className="space-y-1 text-center">
             <h2 className="text-2xl font-black text-slate-900 tracking-tight">

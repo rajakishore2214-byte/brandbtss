@@ -3,7 +3,6 @@ import { Inter, Outfit, Lora } from "next/font/google";
 import "../styles/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ExitIntentModal from "@/components/ExitIntentModal";
 
 import Script from "next/script";
 
@@ -110,9 +109,6 @@ export default function RootLayout({
         
         {/* Footer */}
         <Footer />
-        
-        {/* Exit Intent conversion popup */}
-        <ExitIntentModal />
       </body>
     </html>
   );
