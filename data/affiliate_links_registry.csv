@@ -1,0 +1,52 @@
+Source,Identifier,Network,Original URL,Redirect URL
+Static Config,bonsai-invoicing,Impact,https://bonsai.sjv.io/c/123456/78910/bonsai-invoice-tool,/go/bonsai-invoicing
+Static Config,freshbooks-invoicing,Impact,https://freshbooks.pxf.io/c/234567/89101/freshbooks-accounting,/go/freshbooks-invoicing
+Static Config,proposify-proposals,PartnerStack,https://proposify.partnerstack.com/track?id=proposify-solopreneur,/go/proposify-proposals
+Static Config,better-proposals,GrowSumo,https://betterproposals.grsm.io/betterproposals-freelance,/go/better-proposals
+Static Config,toggl-time-track,Impact,https://toggl.sjv.io/c/345678/90123/toggl-track-premium,/go/toggl-time-track
+Static Config,harvest-time-track,GrowSumo,https://harvest.grsm.io/harvest-time-tracking-tool,/go/harvest-time-track
+Static Config,asana-pm,GrowSumo,https://asana.grsm.io/asana-project-mgmt,/go/asana-pm
+Static Config,monday-pm,PartnerStack,https://monday.partnerstack.com/track?id=monday-solopreneur-pm,/go/monday-pm
+Static Config,amazon-home-kitchen-organizer,Amazon Associates,https://link.amazon/B0b86tIuX,/go/amazon-home-kitchen-organizer
+Static Config,amazon-home-kitchen-cookware,Amazon Associates,https://link.amazon/B0hKvoVao,/go/amazon-home-kitchen-cookware
+Static Config,amazon-home-kitchen-storage,Amazon Associates,https://link.amazon/B0hv50EQ2,/go/amazon-home-kitchen-storage
+Static Config,amazon-smart-home-device-1,Amazon Associates,https://link.amazon/B081CXzON,/go/amazon-smart-home-device-1
+Static Config,amazon-smart-home-device-2,Amazon Associates,https://link.amazon/B01GA8EE4,/go/amazon-smart-home-device-2
+Static Config,amazon-smart-home-device-3,Amazon Associates,https://link.amazon/B05Ehxlur,/go/amazon-smart-home-device-3
+Static Config,amazon-electronics-gadget-1,Amazon Associates,https://link.amazon/B05OKkhlM,/go/amazon-electronics-gadget-1
+Static Config,amazon-electronics-gadget-2,Amazon Associates,https://link.amazon/B0b0H37fG,/go/amazon-electronics-gadget-2
+Static Config,amazon-electronics-gadget-3,Amazon Associates,https://link.amazon/B0dhd5wcA,/go/amazon-electronics-gadget-3
+Static Config,amazon-electronics-gadget-4,Amazon Associates,https://link.amazon/B07unAJM7,/go/amazon-electronics-gadget-4
+Static Config,amazon-electronics-gadget-5,Amazon Associates,https://link.amazon/B07HvTOTt,/go/amazon-electronics-gadget-5
+Static Config,amazon-electronics-gadget-6,Amazon Associates,https://link.amazon/B00zjnrwN,/go/amazon-electronics-gadget-6
+Static Config,amazon-electronics-gadget-7,Amazon Associates,https://link.amazon/B0ic2SWyG,/go/amazon-electronics-gadget-7
+Static Config,amazon-electronics-gadget-8,Amazon Associates,https://link.amazon/B06uDs4Hv,/go/amazon-electronics-gadget-8
+Static Config,amazon-clothing-item-1,Amazon Associates,https://link.amazon/B0foDOnkb,/go/amazon-clothing-item-1
+Static Config,amazon-clothing-item-2,Amazon Associates,https://link.amazon/B0cXsnkuX,/go/amazon-clothing-item-2
+Static Config,amazon-clothing-item-3,Amazon Associates,https://link.amazon/B0h1Aokca,/go/amazon-clothing-item-3
+Static Config,amazon-clothing-item-4,Amazon Associates,https://link.amazon/B0a0ndgc7,/go/amazon-clothing-item-4
+Static Config,amazon-clothing-item-5,Amazon Associates,https://link.amazon/B09AYGgUo,/go/amazon-clothing-item-5
+Static Config,amazon-clothing-item-6,Amazon Associates,https://link.amazon/B06VmxML0,/go/amazon-clothing-item-6
+Static Config,amazon-clothing-item-7,Amazon Associates,https://link.amazon/B0ckOmTZe,/go/amazon-clothing-item-7
+Static Config,amazon-clothing-item-8,Amazon Associates,https://link.amazon/B0apfGuLh,/go/amazon-clothing-item-8
+Static Config,amazon-clothing-item-9,Amazon Associates,https://link.amazon/B0j1VNi1S,/go/amazon-clothing-item-9
+Static Config,amazon-clothing-item-10,Amazon Associates,https://link.amazon/B031n8Ocy,/go/amazon-clothing-item-10
+Static Config,amazon-clothing-item-11,Amazon Associates,https://link.amazon/B06N9GfSO,/go/amazon-clothing-item-11
+Product: Hostinger Business WordPress,hostinger-managed-wordpress,Impact,https://hostinger.in/brandbtss,/api/redirect?productId=hostinger-managed-wordpress&network=Impact&url=https%3A%2F%2Fhostinger.in%2Fbrandbtss
+Product: Bluehost Choice Plus Plan,bluehost-shared-hosting,CJ Affiliate,https://bluehost.com/brandbtss,/api/redirect?productId=bluehost-shared-hosting&network=CJ%20Affiliate&url=https%3A%2F%2Fbluehost.com%2Fbrandbtss
+Product: WP Engine Startup Managed Cloud,wpengine-managed-cloud,ShareASale,https://wpengine.com/brandbtss,/api/redirect?productId=wpengine-managed-cloud&network=ShareASale&url=https%3A%2F%2Fwpengine.com%2Fbrandbtss
+Product: Philips Essential Air Fryer HD9252/90,philips-air-fryer-hd9252,Amazon,https://amazon.in/dp/B08XYXFSN4?tag=brandbtss-21,/api/redirect?productId=philips-air-fryer-hd9252&network=Amazon&url=https%3A%2F%2Famazon.in%2Fdp%2FB08XYXFSN4%3Ftag%3Dbrandbtss-21
+Product: Philips Essential Air Fryer HD9252/90,philips-air-fryer-hd9252,Flipkart,https://flipkart.com/philips-hd9252-air-fryer/p/itmd1,/api/redirect?productId=philips-air-fryer-hd9252&network=Flipkart&url=https%3A%2F%2Fflipkart.com%2Fphilips-hd9252-air-fryer%2Fp%2Fitmd1
+Product: SOLARA Digital Air Fryer Large 5.5L,solara-digital-air-fryer,Amazon,https://amazon.in/dp/B09GDQDZ6R?tag=brandbtss-21,/api/redirect?productId=solara-digital-air-fryer&network=Amazon&url=https%3A%2F%2Famazon.in%2Fdp%2FB09GDQDZ6R%3Ftag%3Dbrandbtss-21
+Product: SOLARA Digital Air Fryer Large 5.5L,solara-digital-air-fryer,Flipkart,https://flipkart.com/solara-digital-air-fryer/p/itm2,/api/redirect?productId=solara-digital-air-fryer&network=Flipkart&url=https%3A%2F%2Fflipkart.com%2Fsolara-digital-air-fryer%2Fp%2Fitm2
+Product: Noise ColorFit Pulse Grand Smartwatch,noise-colorfit-pulse-grand,Amazon,https://amazon.in/dp/B09NV9J5F2?tag=brandbtss-21,/api/redirect?productId=noise-colorfit-pulse-grand&network=Amazon&url=https%3A%2F%2Famazon.in%2Fdp%2FB09NV9J5F2%3Ftag%3Dbrandbtss-21
+Product: Noise ColorFit Pulse Grand Smartwatch,noise-colorfit-pulse-grand,Flipkart,https://flipkart.com/noise-colorfit-pulse-grand/p/itm3,/api/redirect?productId=noise-colorfit-pulse-grand&network=Flipkart&url=https%3A%2F%2Fflipkart.com%2Fnoise-colorfit-pulse-grand%2Fp%2Fitm3
+Product: Samsung Galaxy Watch6 LTE (44mm),samsung-galaxy-watch6,Amazon,https://amazon.in/dp/B0CBJDVKK7?tag=brandbtss-21,/api/redirect?productId=samsung-galaxy-watch6&network=Amazon&url=https%3A%2F%2Famazon.in%2Fdp%2FB0CBJDVKK7%3Ftag%3Dbrandbtss-21
+Product: Samsung Galaxy Watch6 LTE (44mm),samsung-galaxy-watch6,Flipkart,https://flipkart.com/samsung-galaxy-watch6/p/itm4,/api/redirect?productId=samsung-galaxy-watch6&network=Flipkart&url=https%3A%2F%2Fflipkart.com%2Fsamsung-galaxy-watch6%2Fp%2Fitm4
+Product: JBL Go 4 Ultra-Portable Waterproof Speaker,jbl-go-4,Amazon,https://amazon.in/dp/B0D1YGDFSL?tag=brandbtss-21,/api/redirect?productId=jbl-go-4&network=Amazon&url=https%3A%2F%2Famazon.in%2Fdp%2FB0D1YGDFSL%3Ftag%3Dbrandbtss-21
+Product: JBL Go 4 Ultra-Portable Waterproof Speaker,jbl-go-4,Flipkart,https://flipkart.com/jbl-go-4/p/itm5,/api/redirect?productId=jbl-go-4&network=Flipkart&url=https%3A%2F%2Fflipkart.com%2Fjbl-go-4%2Fp%2Fitm5
+Product: Sony SRS-XB100 Compact Wireless Speaker,sony-srs-xb100,Amazon,https://amazon.in/dp/B0CCSKHNVH?tag=brandbtss-21,/api/redirect?productId=sony-srs-xb100&network=Amazon&url=https%3A%2F%2Famazon.in%2Fdp%2FB0CCSKHNVH%3Ftag%3Dbrandbtss-21
+Product: Sony SRS-XB100 Compact Wireless Speaker,sony-srs-xb100,Flipkart,https://flipkart.com/sony-srs-xb100/p/itm6,/api/redirect?productId=sony-srs-xb100&network=Flipkart&url=https%3A%2F%2Fflipkart.com%2Fsony-srs-xb100%2Fp%2Fitm6
+Product: Philips Smart LED decorative copper string lights,philips-decorative-lights,Amazon,https://amazon.in/dp/B0BGDW27M5?tag=brandbtss-21,/api/redirect?productId=philips-decorative-lights&network=Amazon&url=https%3A%2F%2Famazon.in%2Fdp%2FB0BGDW27M5%3Ftag%3Dbrandbtss-21
+Product: Fitkit FT100 Series 3.25HP Motorized Treadmill,fitkit-treadmill,Amazon,https://amazon.in/dp/B075S76XYK?tag=brandbtss-21,/api/redirect?productId=fitkit-treadmill&network=Amazon&url=https%3A%2F%2Famazon.in%2Fdp%2FB075S76XYK%3Ftag%3Dbrandbtss-21
+Product: Fitkit FT100 Series 3.25HP Motorized Treadmill,fitkit-treadmill,Flipkart,https://flipkart.com/fitkit-ft100-motorized-treadmill/p/itm7,/api/redirect?productId=fitkit-treadmill&network=Flipkart&url=https%3A%2F%2Fflipkart.com%2Ffitkit-ft100-motorized-treadmill%2Fp%2Fitm7
