@@ -5,11 +5,15 @@ import { db } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
+function getOneDayAgo() {
+  return new Date(Date.now() - 24 * 60 * 60 * 1000);
+}
+
 export default async function AdminDashboard() {
   // DB Queries for real-time metrics
   const totalClicks = await db.click.count();
   
-  const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  const oneDayAgo = getOneDayAgo();
   const clicksToday = await db.click.count({
     where: {
       clickedAt: { gte: oneDayAgo }

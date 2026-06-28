@@ -37,7 +37,7 @@ export default function AffiliateDisclosurePage() {
         <div className="prose prose-slate max-w-none text-xs sm:text-sm text-slate-600 space-y-6 leading-relaxed">
           <h2 className="text-lg font-bold text-slate-900">1. How Affiliate Links Work</h2>
           <p>
-            When you click on outbound buttons or links on BrandBTSS (e.g. "Check Price" or "Buy Coupon Deal"), a special referral tracking cookie is stored in your web browser by the destination service (such as Hostinger, ConvertKit, Semrush, or a brand direct website).
+            When you click on outbound buttons or links on BrandBTSS (e.g. &quot;Check Price&quot; or &quot;Buy Coupon Deal&quot;), a special referral tracking cookie is stored in your web browser by the destination service (such as Hostinger, ConvertKit, Semrush, or a brand direct website).
           </p>
           <p>
             If you purchase a subscription plan within the cookie expiration window, the company pays BrandBTSS a referral commission. <strong>This commission is paid entirely by the vendor out of their marketing margins and does NOT increase the price you pay.</strong>

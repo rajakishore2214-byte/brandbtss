@@ -111,7 +111,7 @@ export default function AboutPage() {
               We value your trust above any referral commission.
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Commissions never influence our ratings. If a software host is too slow or a keyword tool's features are overpriced, we will call it out and suggest better budget-friendly alternatives. We believe that by building honest, long-term relationships with our readers, we will build a more sustainable platform.
+              Commissions never influence our ratings. If a software host is too slow or a keyword tool&apos;s features are overpriced, we will call it out and suggest better budget-friendly alternatives. We believe that by building honest, long-term relationships with our readers, we will build a more sustainable platform.
             </p>
             <div className="grid sm:grid-cols-2 gap-3 pt-2 text-xs text-slate-200">
               <div className="flex items-center gap-2">

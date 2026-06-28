@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
     // Verify authorized user
     const adminChatId = process.env.TELEGRAM_CHAT_ID;
-    if (adminChatId && String(chatId) !== String(adminChatId)) {
+    if (!adminChatId || String(chatId) !== String(adminChatId)) {
       await sendReply(chatId, "🚫 <b>Unauthorized:</b> You do not have permissions to command this bot.");
       return NextResponse.json({ ok: true });
     }

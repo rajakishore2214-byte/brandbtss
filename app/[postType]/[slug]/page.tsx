@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import { format } from "date-fns";
@@ -183,7 +184,7 @@ export default async function PostPage({ params }: PageProps) {
         
         {/* Breadcrumb path */}
         <nav className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 font-sans">
-          <a href="/" className="hover:text-primary transition-colors">Home</a>
+          <Link href="/" className="hover:text-primary transition-colors">Home</Link>
           <span>/</span>
           <span className="text-slate-500">{post.postType === "roundup" ? "Roundups" : "Reviews"}</span>
         </nav>

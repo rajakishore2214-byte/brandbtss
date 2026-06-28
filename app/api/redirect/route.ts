@@ -16,25 +16,29 @@ export async function GET(request: NextRequest) {
     const parsedUrl = new URL(url);
     const hostname = parsedUrl.hostname.toLowerCase();
     
-    // Whitelist check
-    const isWhitelisted = 
-      hostname.endsWith("amazon.com") || 
-      hostname.endsWith("amazon.in") || 
-      hostname.endsWith("link.amazon") ||
-      hostname.endsWith("sjv.io") || 
-      hostname.endsWith("pxf.io") || 
-      hostname.endsWith("partnerstack.com") || 
-      hostname.endsWith("grsm.io") ||
-      hostname.endsWith("hostinger.com") ||
-      hostname.endsWith("convertkit.com") ||
-      hostname.endsWith("semrush.com") ||
+    // Strict Whitelist check
+    const whitelist = [
+      "amazon.com",
+      "amazon.in",
+      "link.amazon",
+      "sjv.io",
+      "pxf.io",
+      "partnerstack.com",
+      "grsm.io",
+      "hostinger.com",
+      "convertkit.com",
+      "semrush.com"
+    ];
+
+    const isWhitelisted =
       hostname === "localhost" ||
-      hostname === "127.0.0.1";
+      hostname === "127.0.0.1" ||
+      whitelist.some(domain => hostname === domain || hostname.endsWith("." + domain));
       
     if (!isWhitelisted) {
       return NextResponse.json({ error: "Invalid redirection target domain." }, { status: 400 });
     }
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: "Invalid redirect URL format." }, { status: 400 });
   }
 
