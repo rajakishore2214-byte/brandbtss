@@ -10,66 +10,112 @@ function getOneDayAgo() {
 }
 
 export default async function AdminDashboard() {
-  // DB Queries for real-time metrics
-  const totalClicks = await db.click.count();
-  
-  const oneDayAgo = getOneDayAgo();
-  const clicksToday = await db.click.count({
-    where: {
-      clickedAt: { gte: oneDayAgo }
-    }
-  });
+  let dbError = null;
+  let totalClicks = 0;
+  let clicksToday = 0;
+  let amazonClicks = 0;
+  let flipkartClicks = 0;
+  let otherClicks = 0;
+  let productCount = 0;
+  let categoryCount = 0;
+  let articleCount = 0;
+  let blogCount = 0;
+  let draftArticleCount = 0;
+  let publishedArticleCount = 0;
+  let productSeoPct = 100;
+  let articleTitlePct = 100;
+  let articleDescPct = 100;
+  let productsWithKeywords = 0;
+  let validTitlesCount = 0;
+  let validDescsCount = 0;
+  let seoOverallScore = 100;
+  let recentClicks: any[] = [];
+  let amazonPct = 0;
+  let flipkartPct = 0;
+  let otherPct = 0;
 
-  const amazonClicks = await db.click.count({ where: { affiliateNetwork: "Amazon" } });
-  const flipkartClicks = await db.click.count({ where: { affiliateNetwork: "Flipkart" } });
-  const otherClicks = totalClicks - (amazonClicks + flipkartClicks);
+  try {
+    // DB Queries for real-time metrics
+    totalClicks = await db.click.count();
+    
+    const oneDayAgo = getOneDayAgo();
+    clicksToday = await db.click.count({
+      where: {
+        clickedAt: { gte: oneDayAgo }
+      }
+    });
 
-  const productCount = await db.product.count();
-  const categoryCount = await db.category.count();
-  const articleCount = await db.article.count();
-  const blogCount = await db.article.count({ where: { type: "blog" } });
-  const draftArticleCount = await db.article.count({ where: { status: "draft" } });
-  const publishedArticleCount = await db.article.count({ where: { status: "published" } });
+    amazonClicks = await db.click.count({ where: { affiliateNetwork: "Amazon" } });
+    flipkartClicks = await db.click.count({ where: { affiliateNetwork: "Flipkart" } });
+    otherClicks = totalClicks - (amazonClicks + flipkartClicks);
 
-  // Calculate SEO Health Score
-  // 1. % of products with keyword attributes
-  const productsWithKeywords = await db.product.count({
-    where: {
-      AND: [
-        { NOT: { keywords: null } },
-        { NOT: { keywords: "" } }
-      ]
-    }
-  });
-  const productSeoPct = productCount > 0 ? Math.round((productsWithKeywords / productCount) * 100) : 100;
+    productCount = await db.product.count();
+    categoryCount = await db.category.count();
+    articleCount = await db.article.count();
+    blogCount = await db.article.count({ where: { type: "blog" } });
+    draftArticleCount = await db.article.count({ where: { status: "draft" } });
+    publishedArticleCount = await db.article.count({ where: { status: "published" } });
 
-  // 2. % of articles with valid SEO titles and descriptions
-  const articlesListForSeo = await db.article.findMany({
-    select: { seoTitle: true, seoDescription: true }
-  });
-  const validTitlesCount = articlesListForSeo.filter(a => a.seoTitle && a.seoTitle.trim().length > 10).length;
-  const validDescsCount = articlesListForSeo.filter(a => a.seoDescription && a.seoDescription.trim().length >= 100 && a.seoDescription.trim().length <= 170).length;
+    // Calculate SEO Health Score
+    productsWithKeywords = await db.product.count({
+      where: {
+        AND: [
+          { NOT: { keywords: null } },
+          { NOT: { keywords: "" } }
+        ]
+      }
+    });
+    productSeoPct = productCount > 0 ? Math.round((productsWithKeywords / productCount) * 100) : 100;
 
-  const articleTitlePct = articleCount > 0 ? Math.round((validTitlesCount / articleCount) * 100) : 100;
-  const articleDescPct = articleCount > 0 ? Math.round((validDescsCount / articleCount) * 100) : 100;
-  
-  const seoOverallScore = Math.round((productSeoPct + articleTitlePct + articleDescPct) / 3);
+    const articlesListForSeo = await db.article.findMany({
+      select: { seoTitle: true, seoDescription: true }
+    });
+    validTitlesCount = articlesListForSeo.filter(a => a.seoTitle && a.seoTitle.trim().length > 10).length;
+    validDescsCount = articlesListForSeo.filter(a => a.seoDescription && a.seoDescription.trim().length >= 100 && a.seoDescription.trim().length <= 170).length;
 
-  // Fetch 5 most recent clicks
-  const recentClicks = await db.click.findMany({
-    take: 5,
-    orderBy: { clickedAt: "desc" }
-  });
+    articleTitlePct = articleCount > 0 ? Math.round((validTitlesCount / articleCount) * 100) : 100;
+    articleDescPct = articleCount > 0 ? Math.round((validDescsCount / articleCount) * 100) : 100;
+    
+    seoOverallScore = Math.round((productSeoPct + articleTitlePct + articleDescPct) / 3);
 
-  // Calculate percentage distribution
-  const amazonPct = totalClicks > 0 ? Math.round((amazonClicks / totalClicks) * 100) : 0;
-  const flipkartPct = totalClicks > 0 ? Math.round((flipkartClicks / totalClicks) * 100) : 0;
-  const otherPct = totalClicks > 0 ? Math.round((otherClicks / totalClicks) * 100) : 0;
+    // Fetch 5 most recent clicks
+    recentClicks = await db.click.findMany({
+      take: 5,
+      orderBy: { clickedAt: "desc" }
+    });
+
+    // Calculate percentage distribution
+    amazonPct = totalClicks > 0 ? Math.round((amazonClicks / totalClicks) * 100) : 0;
+    flipkartPct = totalClicks > 0 ? Math.round((flipkartClicks / totalClicks) * 100) : 0;
+    otherPct = totalClicks > 0 ? Math.round((otherClicks / totalClicks) * 100) : 0;
+  } catch (err: any) {
+    console.error("Database connection failure in AdminDashboard:", err);
+    dbError = err.message || String(err);
+  }
 
   return (
     <div className="min-h-screen bg-slate-955 text-slate-100 py-6 sm:py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
         
+        {dbError && (
+          <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-5 text-slate-100 flex items-start gap-4">
+            <div className="rounded-lg bg-red-500/20 p-2 text-red-400 shrink-0">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <div className="space-y-1">
+              <h3 className="font-bold text-white text-sm">Database Configuration Required</h3>
+              <p className="text-[11px] text-slate-300 leading-relaxed">
+                We couldn&apos;t connect to the database. This is likely because the <code className="bg-slate-900 px-1.5 py-0.5 rounded font-mono text-red-300">DATABASE_URL</code> environment variable has not been configured in your Vercel deployment settings, or the PostgreSQL database server is offline.
+              </p>
+              <p className="text-[10px] text-slate-400 pt-1">
+                <strong>Error Details:</strong> <code className="text-slate-350 font-mono break-all">{dbError}</code>
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-800 pb-6">
           <div>

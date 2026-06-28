@@ -7,14 +7,41 @@ import DeleteArticleButton from "@/components/DeleteArticleButton";
 export const dynamic = "force-dynamic";
 
 export default async function AdminArticlesDashboard() {
-  // Fetch articles from database
-  const articlesList = await db.article.findMany({
-    orderBy: { createdAt: "desc" }
-  });
+  let articlesList: any[] = [];
+  let dbError = null;
+
+  try {
+    // Fetch articles from database
+    articlesList = await db.article.findMany({
+      orderBy: { createdAt: "desc" }
+    });
+  } catch (err: any) {
+    console.error("Failed to fetch articles in admin dashboard:", err);
+    dbError = err.message || String(err);
+  }
 
   return (
     <div className="min-h-screen bg-slate-955 text-slate-100 py-6 sm:py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
+        
+        {dbError && (
+          <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-5 text-slate-100 flex items-start gap-4">
+            <div className="rounded-lg bg-red-500/20 p-2 text-red-400 shrink-0">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <div className="space-y-1">
+              <h3 className="font-bold text-white text-sm">Database Configuration Required</h3>
+              <p className="text-[11px] text-slate-355 leading-relaxed">
+                We couldn&apos;t connect to the database to retrieve articles. Please verify your <code className="bg-slate-900 px-1.5 py-0.5 rounded font-mono text-red-300">DATABASE_URL</code> environment variable in your Vercel settings.
+              </p>
+              <p className="text-[10px] text-slate-400 pt-1">
+                <strong>Error Details:</strong> <code className="text-slate-300 font-mono break-all">{dbError}</code>
+              </p>
+            </div>
+          </div>
+        )}
         
         {/* Navigation and Add Button */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
