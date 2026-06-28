@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     creator: "@brandbtss",
   },
   verification: {
-    google: "rF3kl8mU4KPcHRZyqvIkmo3he9pEQHzregObqanJjyc",
+    google: "66zXTZglbuwn4uS0OUImvYPBYOChLjfgMldBeCY9FqM",
   },
 };
 
