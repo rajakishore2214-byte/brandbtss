@@ -22,9 +22,11 @@ export default function Footer() {
 
   const trustLinks = [
     { name: "Home", href: "/" },
-    { name: "About Us", href: "/" },
-    { name: "Privacy Policy", href: "/" },
-    { name: "Terms & Conditions", href: "/" }
+    { name: "About Us", href: "/about" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Terms & Conditions", href: "/terms" },
+    { name: "Affiliate Disclosure", href: "/affiliate-disclosure" },
+    { name: "Contact Us", href: "/contact" }
   ];
 
   return (
