@@ -56,6 +56,9 @@ export const metadata: Metadata = {
     description: "Independent hand-tested guides and deals.",
     creator: "@brandbtss",
   },
+  verification: {
+    google: "rF3kl8mU4KPcHRZyqvIkmo3he9pEQHzregObqanJjyc",
+  },
 };
 
 export const viewport: Viewport = {

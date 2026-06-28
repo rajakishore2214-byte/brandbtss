@@ -34,6 +34,9 @@ export const metadata: Metadata = {
     description: "Explore unbiased product reviews, side-by-side comparisons, and active discount coupon deals on web hosting, email marketing, and tech accessories.",
     creator: "@brandbtss",
   },
+  verification: {
+    google: "rF3kl8mU4KPcHRZyqvIkmo3he9pEQHzregObqanJjyc",
+  },
 };
 
 export default async function Home() {
