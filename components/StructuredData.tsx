@@ -30,23 +30,48 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
       }
     };
   } else if (type === "product") {
+    const fallbackImage = data.image.startsWith("http") ? data.image : `https://brandbtss.com${data.image}`;
+    
+    const parsedOffers = data.affiliateUrlsParsed && data.affiliateUrlsParsed.length > 0
+      ? data.affiliateUrlsParsed.map((aff: any) => ({
+          "@type": "Offer",
+          "priceCurrency": "INR",
+          "price": aff.price || data.price,
+          "availability": "https://schema.org/InStock",
+          "url": `https://brandbtss.com/api/redirect?productId=${data.id}&network=${encodeURIComponent(aff.network)}&url=${encodeURIComponent(aff.url)}`
+        }))
+      : [];
+
+    const offerSection = parsedOffers.length > 1
+      ? {
+          "@type": "AggregateOffer",
+          "priceCurrency": "INR",
+          "lowPrice": Math.min(...parsedOffers.map((o: any) => Number(o.price))),
+          "highPrice": Math.max(...parsedOffers.map((o: any) => Number(o.price))),
+          "offerCount": parsedOffers.length,
+          "offers": parsedOffers
+        }
+      : parsedOffers.length === 1
+      ? parsedOffers[0]
+      : {
+          "@type": "Offer",
+          "priceCurrency": "INR",
+          "price": data.price,
+          "availability": "https://schema.org/InStock",
+          "url": data.affiliateUrl.startsWith("http") ? data.affiliateUrl : `https://brandbtss.com${data.affiliateUrl}`
+        };
+
     schema = {
       "@context": "https://schema.org",
       "@type": "Product",
       "name": data.name,
-      "image": data.image,
+      "image": fallbackImage,
       "description": data.description,
       "brand": {
         "@type": "Brand",
         "name": data.brand
       },
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "INR",
-        "price": data.price,
-        "availability": "https://schema.org/InStock",
-        "url": data.affiliateUrl
-      },
+      "offers": offerSection,
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": data.rating,

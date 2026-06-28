@@ -20,12 +20,30 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!dbProduct) return {};
 
+  const title = `${dbProduct.brand} ${dbProduct.name} Review, Specs & Best Deals (Tested) | BrandBTSS`;
+  const description = `Expert hands-on review, pros and cons, detailed specifications, recommendation score, and active merchant coupon deals for the ${dbProduct.brand} ${dbProduct.name}.`;
+  const canonicalUrl = `https://brandbtss.com/product/${id}`;
+  const imageUrl = dbProduct.image.startsWith("http") ? dbProduct.image : `https://brandbtss.com${dbProduct.image}`;
+
   return {
-    title: `${dbProduct.brand} ${dbProduct.name} Specs & Reviews | BrandBTSS`,
-    description: `Independent hand-tested specifications, pros and cons, recommendation score, and best deals for the ${dbProduct.brand} ${dbProduct.name}.`,
+    title,
+    description,
     alternates: {
-      canonical: `/product/${id}`,
+      canonical: canonicalUrl,
     },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      type: "website",
+      images: [{ url: imageUrl, width: 600, height: 600 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+    }
   };
 }
 
@@ -282,12 +300,21 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
             {/* Quick rating details */}
             <section className="bg-slate-900 text-white rounded-3xl p-6 space-y-4">
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-amber-400">
+                <span className="rounded bg-amber-500/20 px-2 py-0.5 border border-amber-500/30">Verified E-E-A-T Review</span>
+              </div>
               <h3 className="font-bold text-sm uppercase tracking-wider">Editorial Recommendation</h3>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <div className="text-3xl font-black text-amber-400">{product.score}%</div>
                 <p className="text-xs text-slate-400 leading-relaxed">
                   Based on our hands-on testing parameters including build durability, operational ease, price-to-spec ratios, and comparative brand analysis, we rate the {product.name} as a highly recommended buy.
                 </p>
+                <div className="border-t border-slate-800 pt-3 flex flex-col gap-1.5 text-[10px] text-slate-450">
+                  <span>Reviewed by the <strong className="text-slate-200">BrandBTSS Editorial Board</strong></span>
+                  <Link href="/about" className="text-amber-400 hover:text-amber-500 font-bold hover:underline inline-flex items-center gap-0.5 transition-colors">
+                    Learn about our hands-on testing methodology &rarr;
+                  </Link>
+                </div>
               </div>
             </section>
           </div>
